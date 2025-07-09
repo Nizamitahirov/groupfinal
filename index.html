@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Leadership: The New Digital Body Language</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0118;
+            --bg-secondary: #1a0b2e;
+            --bg-tertiary: #2d1b69;
+            --accent-purple: #6366f1;
+            --accent-cyan: #06d6a0;
+            --accent-pink: #ec4899;
+            --accent-orange: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(0, 0, 0, 0.03); /* Subtle dark background on hover for light mode */
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at top, var(--bg-secondary) 0%, var(--bg-primary) 70%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] body {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10%, 90% { opacity: 1; }
+            50% { transform: translateY(-100vh) rotate(180deg); }
+        }
+
+        /* === NAVBAR FIXES START HERE === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(10, 1, 24, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 1, 24, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="light"] .navbar {
+            background: rgba(248, 250, 252, 0.85); /* Light background for light mode */
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        [data-theme="light"] .navbar.scrolled {
+            background: rgba(241, 245, 249, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .theme-toggle {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '✨';
+            position: absolute;
+            right: -30px;
+            top: -5px;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-primary); /* This now correctly switches between black and white */
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+            background: var(--glass-bg); /* This now correctly uses the theme-specific glass-bg */
+        }
+        /* === NAVBAR FIXES END HERE === */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 0 2rem;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(6, 214, 160, 0.1) 0%, transparent 50%);
+            animation: heroGlow 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .floating-emojis {
+            position: absolute;
+            font-size: clamp(3rem, 8vw, 6rem);
+            opacity: 0.1;
+            animation: gentleFloat 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .emoji-1 { top: 15%; left: 10%; animation-delay: 0s; }
+        .emoji-2 { top: 60%; right: 15%; animation-delay: 7s; }
+        .emoji-3 { bottom: 20%; left: 45%; animation-delay: 14s; }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(-20px) rotate(-10deg) scale(0.8); }
+            50% { transform: translateY(20px) rotate(10deg) scale(1.2); }
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .section-title .emoji {
+            font-size: clamp(2rem, 4vw, 3rem);
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            -webkit-text-fill-color: unset;
+            color: inherit;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        [data-theme="light"] .section-title .emoji {
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 2px;
+        }
+
+        .sub-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-glow);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+        
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+        
+        ul li, ol li {
+            margin-bottom: 0.5rem;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .team-member {
+            text-align: center;
+            position: relative;
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .team-avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: var(--transition);
+        }
+
+        .team-member:hover .team-avatar::before {
+            animation: shimmer 1.5s ease-in-out;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .team-member:hover .team-avatar {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .team-role {
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 214, 160, 0.1));
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .stat-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .quiz-question {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2.5rem;
+            color: var(--text-primary);
+        }
+
+        .quiz-answers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-btn {
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+            border-color: var(--accent-purple);
+        }
+
+        .quiz-btn.correct {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .quiz-btn.incorrect {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+        }
+
+        .quiz-feedback {
+            min-height: 80px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .quiz-feedback small {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        [data-theme="light"] .quiz-feedback small {
+            color: var(--text-secondary);
+        }
+
+
+        .next-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .culture-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .culture-emoji {
+            font-size: 4rem;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px;
+            min-height: 100px;
+        }
+
+        .culture-emoji:hover, .culture-emoji.active {
+            transform: scale(1.2) rotate(5deg);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--accent-cyan);
+        }
+
+        .culture-info {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+            max-width: 900px;
+            margin: 0 auto;
+            transition: opacity 0.5s ease;
+        }
+
+        .culture-info h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .culture-info .culture-details {
+            width: 100%;
+        }
+
+        .culture-info .culture-details p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .risk-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger);
+        }
+
+        .risk-box strong {
+            color: var(--danger);
+        }
+
+        .footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--glass-border);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+        }
+        @media (max-width: 768px) {
+            .grid-2,
+            .grid-3,
+            .grid-4,
+            .quiz-answers {
+                grid-template-columns: 1fr;
+            }
+            
+            .culture-grid {
+                gap: 1rem;
+            }
+            
+            .culture-emoji {
+                font-size: 3rem;
+                padding: 1rem;
+            }
+            
+            .section {
+                padding: 4rem 1rem;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 450px;
+            margin: 2rem 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .chart-title {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .small-chart {
+            height: 350px;
+        }
+        
+        .custom-table {
+            width: 100%; 
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .custom-table th, .custom-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .custom-table thead tr {
+            background: rgba(99, 102, 241, 0.1);
+        }
+        .custom-table td:nth-child(2) {
+            text-align: center;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="particles" id="particles"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#" class="logo">EmojiLeadership</a>
+                <button class="theme-toggle" id="themeToggle">
+                    <span id="themeIcon">🌙</span>
+                </button>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#applications">Applications</a></li>
+                <li><a href="#analysis">Analysis</a></li>
+                <li><a href="#culture">Culture Guide</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="floating-emojis emoji-1">🚀</div>
+        <div class="floating-emojis emoji-2">💡</div>
+        <div class="floating-emojis emoji-3">🤝</div>
+        
+        <div class="hero-content fade-in">
+            <h1 class="hero-title">Emoji Leadership</h1>
+            <p class="hero-subtitle">How Informal Communication Is Redefining Corporate Culture</p>
+            <a href="#introduction" class="cta-button">
+                <span>Discover the Shift</span>
+                <span>✨</span>
+            </a>
+        </div>
+    </section>
+
+    <section id="introduction" class="section">
+        <h2 class="section-title"><span class="emoji">🎯</span>The Central Argument</h2>
+        <div class="card">
+            <p class="card-description" style="font-size: 1.1rem; text-align: center;">
+                In today's digitally connected workplace, emojis, GIFs, and memes are becoming an unexpected yet powerful language of leadership. Once seen as juvenile or informal, these tools are now shaping how leaders communicate tone, emotion, and authority. As organizations shift toward flatter hierarchies, hybrid teams, and instant communication platforms like Slack and MS Teams, a more human, emotionally intelligent leadership style is emerging — and emojis are at the heart of it.
+            </p>
+            <p class="card-description" style="font-size: 1.1rem; text-align: center; margin-top: 1rem;">
+                This transformation isn't superficial — it reflects deeper changes in leadership tone, generational expectations, cultural norms, and digital literacy.
+            </p>
+        </div>
+
+        <div class="card" style="margin-top: 3rem; text-align: center; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 214, 160, 0.1));">
+            <h3 style="color: var(--accent-cyan); margin-bottom: 1rem; font-size: 1.5rem;">
+                “Emojis are not unprofessional. Poor emotional communication is.”
+            </h3>
+            <p style="color: var(--text-muted); font-style: italic;">
+                — Adapted from Microsoft's Workplace Culture Report, 2023
+            </p>
+        </div>
+        
+        <h3 class="sub-title">From Formal to Emotional: Why This Shift Is Happening</h3>
+        <div class="grid grid-2">
+            <div class="card">
+                 <span class="card-icon">⏳</span>
+                <h3 class="card-title">The Old Way vs. The New Reality</h3>
+                <p class="card-description">
+                   Traditional corporate communication was built on formality and structure — long emails, carefully phrased memos, and face-to-face meetings. But remote work and new technologies have led to:
+                    <ul>
+                        <li>Shorter attention spans</li>
+                        <li>Fewer face-to-face emotional cues</li>
+                        <li>A desire for authenticity and relatability</li>
+                    </ul>
+                </p>
+            </div>
+             <div class="card">
+                 <span class="card-icon">💬</span>
+                <h3 class="card-title">The Response</h3>
+                <p class="card-description">
+                    In response, managers are increasingly using emoji-driven and visual communication to compensate for missing emotional signals in digital workspaces. They are intentionally crafting a new <strong>digital body language</strong> using emojis, GIFs, and shorthand to express tone, intent, and emotion in the absence of face-to-face cues.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="research" class="section">
+        <h2 class="section-title"><span class="emoji">🔬</span>Neuroscience & Psychology: The Power of Symbols</h2>
+        <p style="text-align: center; max-width: 800px; margin: -2rem auto 4rem; color: var(--text-secondary);">Emojis are far more than cute icons — they engage the brain in specific, meaningful ways. Here's what the research says:</p>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <span class="card-icon">🧠</span>
+                <h3 class="card-title">Adobe Emoji Trend Report (2022)</h3>
+                <p class="card-description">
+                    Emojis activate the same part of the brain (fusiform gyrus) as human facial recognition — making them neurologically processed like real expressions.
+                </p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🤝</span>
+                <h3 class="card-title">Derks et al. (2008)</h3>
+                <p class="card-description">
+                    Emojis increase empathy and warmth in text-based communication, especially in environments with status imbalances (e.g., manager-employee).
+                </p>
+            </div>
+            <div class="card">
+                <span class="card-icon">📝</span>
+                <h3 class="card-title">University of Missouri Study (2021)</h3>
+                <p class="card-description">
+                    People interpret emotionally neutral text as negative unless a positive emoji is added — confirming that negative tone is often assumed in the absence of visual cues.
+                </p>
+            </div>
+        </div>
+
+        <h3 class="sub-title">Generational Divide: Who Likes Emoji Leadership?</h3>
+        <div class="chart-grid">
+            <div class="chart-container">
+                <div class="chart-title">📊 Manager Emoji Use: "Makes communication more human"</div>
+                <canvas id="generationalChart"></canvas>
+            </div>
+            <div class="card">
+                 <h3 class="card-title">Key Insights on the Divide</h3>
+                 <p class="card-description">
+                    <strong style="color:var(--accent-cyan)">Slack's Future of Work Survey (2022):</strong> Shows a clear split. Younger generations embrace this new form of communication from leaders.
+                    <br><br>
+                    <strong style="color:var(--accent-cyan)">McKinsey Insight (2023):</strong> Informal communication increases perceived leadership accessibility among younger employees, but older workers may see it as a loss of authority.
+                    <br><br>
+                    This generational tension makes emoji leadership both a <strong>unifying tool and a communication risk</strong> — depending on audience, culture, and timing.
+                 </p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="applications" class="section">
+        <h2 class="section-title"><span class="emoji">🏢</span>Real-World Applications</h2>
+        <p style="text-align: center; max-width: 800px; margin: -2rem auto 4rem; color: var(--text-secondary);">Leading companies are already integrating emojis into their communication strategies to build culture and improve efficiency.</p>
+        <div class="grid grid-3">
+            <div class="card">
+                <span class="card-icon">🏨</span>
+                <h3 class="card-title">Airbnb: Slack Reactions as Communication Tools</h3>
+                <p class="card-description">
+                    Uses emojis in Slack to approve tasks, provide feedback, and make decisions.
+                    <br><br><strong>Common codes:</strong><br>
+                    ✅ = Approved<br>
+                    🔍 = Under review<br>
+                    🙏 = Thanks
+                    <br><br><strong>Impact:</strong> Creates an inclusive atmosphere where decisions are visual, fast, and less hierarchical.
+                </p>
+            </div>
+            <div class="card">
+                <span class="card-icon">☁️</span>
+                <h3 class="card-title">Salesforce: Humanizing Executive Tone</h3>
+                <p class="card-description">
+                    CEO Marc Benioff and leaders regularly use emojis in internal emails and team updates.
+                    <br><br><strong>Example:</strong><br>
+                    🏆 to recognize teams<br>
+                    ✅ for weekly goals<br>
+                    ❤️ for wellness topics
+                    <br><br><strong>Impact:</strong> Internal surveys show that employees rate emoji-using leaders as more relatable and engaged.
+                </p>
+            </div>
+            <div class="card">
+                <span class="card-icon">💻</span>
+                <h3 class="card-title">Buffer: Fully Remote Culture Enhanced by Informal Cues</h3>
+                <p class="card-description">
+                    Employees use emojis and GIFs as part of feedback, standups, and performance discussions.
+                    <br><br><strong>One practice:</strong><br>
+                    🎉 Responding to big wins<br>
+                    ❤️ Personal check-ins
+                    <br><br><strong>Result:</strong> High scores on psychological safety, despite being 100% remote.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="analysis" class="section">
+        <h2 class="section-title"><span class="emoji">📈</span>Success vs. Failure Analysis</h2>
+        
+        <div class="grid grid-2">
+            <div class="card" style="border-left: 4px solid var(--success);">
+                <span class="card-icon">✅</span>
+                <h3 class="card-title">Successful Case: Satya Nadella (Microsoft)</h3>
+                <p class="card-description">
+                    <strong>Leadership Style:</strong> Transformational Leadership<br>
+                    <strong>Emoji Use:</strong> Thoughtful, inclusive, and emotionally intelligent use in internal communications and digital town halls. He made regular use of emojis in internal Yammer posts and Teams chats to signal recognition and warmth. For example, in a 2020 message, Nadella included the 🎉 (party popper) and 🙏 (thank you) emojis.
+                    <br><br><strong>Why It Worked:</strong> His empathetic leadership style made the emojis feel genuine. A Microsoft UX researcher stated, "when Satya reacts to your post, even just a ❤️, it makes you feel seen."
+                </p>
+            </div>
+            
+            <div class="card" style="border-left: 4px solid var(--danger);">
+                <span class="card-icon">❌</span>
+                <h3 class="card-title">Unsuccessful Case: Vishal Garg (Better.com)</h3>
+                <p class="card-description">
+                    <strong>Leadership Style:</strong> Transactional/Autocratic Leadership<br>
+                    <strong>Emoji Use:</strong> Casual and emotionally misaligned in high-stakes communication. After laying off 900 employees on Zoom, he used 😔 (disappointed face) and 🙏 (thank you) emojis in a follow-up Slack message.
+                    <br><br><strong>Why It Failed:</strong> The emojis clashed with the gravity of the situation (mass layoffs). His transactional style didn't support the emotional rapport needed to make emoji use feel authentic. The emojis came off as disingenuous, tone-deaf, and manipulative.
+                </p>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 3rem;">
+            <h3 class="card-title" style="text-align: center; margin-bottom: 2rem;">Leadership Styles & Emoji Use Compatibility</h3>
+            <div style="overflow-x: auto;">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Leadership Style</th>
+                            <th>Emoji Use Compatibility</th>
+                            <th>Why / Why Not</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Transformational</td><td style="color: var(--success);">✅ High</td><td>Inspires through vision and empathy. Emojis reinforce warmth, recognition, vision.</td></tr>
+                        <tr><td>Servant Leadership</td><td style="color: var(--success);">✅ High</td><td>Focuses on team needs; emojis can support open and supportive tone.</td></tr>
+                        <tr><td>Democratic (Participative)</td><td style="color: var(--success);">✅ High</td><td>Inclusive style; emojis help in building consensus and shared enthusiasm.</td></tr>
+                        <tr><td>Transactional</td><td style="color: var(--warning);">⚠️ Moderate</td><td>Performance-focused; emojis may feel out of place unless used sparingly.</td></tr>
+                        <tr><td>Laissez-faire</td><td style="color: var(--warning);">⚠️ Moderate-Low</td><td>Low structure might lead to inconsistent or confusing emoji usage.</td></tr>
+                        <tr><td>Autocratic</td><td style="color: var(--danger);">❌ Low</td><td>One-way communication; emojis often appear forced or insincere.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <h3 class="sub-title">Communication Models in Action</h3>
+        <div class="grid grid-2">
+            <div class="card">
+                <h3 class="card-title">Aristotle's Model (Speaker-Message-Audience)</h3>
+                <p class="card-description">This model focuses on persuasion. Emojis act as rhetorical devices, supporting:
+                    <ul>
+                        <li><strong>Ethos (credibility):</strong> Damaged by a sarcastic emoji (e.g., 😏) in a performance warning.</li>
+                        <li><strong>Pathos (emotion):</strong> Amplified by a celebratory emoji (e.g., 🥳) from a respected leader.</li>
+                        <li><strong>Logos (clarity):</strong> Emojis help clarify tone, supporting the logical message.</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="card">
+                <h3 class="card-title">Shannon-Weaver Model (Encoding-Decoding)</h3>
+                <p class="card-description">This model explains miscommunication.
+                    <ul>
+                        <li><strong>Encoding:</strong> A leader sends "Well done 👍" to encode appreciation.</li>
+                        <li><strong>Noise:</strong> Cultural or generational differences distort the message.</li>
+                        <li><strong>Decoding:</strong> A Gen Z employee from a different culture might decode 👍 as cold, dismissive, or passive-aggressive.</li>
+                        <li><strong>Result:</strong> Communication breakdown.</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="culture" class="section">
+        <h2 class="section-title"><span class="emoji">🌍</span>A Global Guide to Emoji Meanings</h2>
+        
+        <div class="culture-grid">
+            <div class="culture-emoji active" data-culture="thumbs-up">👍</div>
+            <div class="culture-emoji" data-culture="clapping">👏</div>
+            <div class="culture-emoji" data-culture="smiling">😊</div>
+            <div class="culture-emoji" data-culture="skull">💀</div>
+        </div>
+        
+        <div class="culture-info" id="cultureInfo">
+            <!-- Initial content will be loaded by JS -->
+        </div>
+
+        <h3 class="sub-title">When Informality Goes Wrong: Risks & Real Examples</h3>
+        <div class="grid grid-3">
+            <div class="card" style="border-left: 4px solid var(--danger);">
+                <h3 class="card-title">Goldman Sachs: Slack Missteps</h3>
+                <p class="card-description">Emojis like 😅 and 🙏 used during internal layoff discussions were leaked. Employees criticized leadership for being insensitive and unprofessional.
+                <br><strong>Impact:</strong> Damage to employee trust, media backlash.</p>
+            </div>
+             <div class="card" style="border-left: 4px solid var(--warning);">
+                <h3 class="card-title">Mitsubishi Corp: Generational Misalignment</h3>
+                <p class="card-description">Introduced emojis into internal performance updates as part of an HR experiment. Senior managers perceived them as unserious and confusing.
+                <br><strong>Outcome:</strong> The initiative was retracted after just 3 months.</p>
+            </div>
+             <div class="card" style="border-left: 4px solid var(--warning);">
+                <h3 class="card-title">Netflix: Cultural Miscommunication</h3>
+                <p class="card-description">While 👍 is used for confirmation in the U.S., it’s seen as sarcastic or dismissive in some Asian and Middle Eastern cultures. This led to unintentional miscommunication.
+                <br><strong>Outcome:</strong> Required additional cultural training.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="quiz" class="section">
+        <h2 class="section-title"><span class="emoji">🧪</span>Test Your Emoji Leadership IQ</h2>
+        
+        <div class="quiz-container">
+            <div class="quiz-question" id="quizQuestion">Loading quiz...</div>
+            <div class="quiz-answers" id="quizAnswers"></div>
+            <div class="quiz-feedback" id="quizFeedback"></div>
+            <button class="next-btn" id="nextBtn" style="display: none;">Next Question →</button>
+        </div>
+    </section>
+
+    <section id="conclusion" class="section">
+        <h2 class="section-title"><span class="emoji">🎯</span>Key Findings & Closing Thoughts</h2>
+        <div class="grid grid-3">
+            <div class="card">
+                <h3 class="card-title">✅ Emojis improve clarity of tone</h3>
+                <p class="card-description">They are especially powerful in emotionally neutral messages, preventing misinterpretation.</p>
+            </div>
+            <div class="card">
+                <h3 class="card-title">🤝 They foster psychological safety</h3>
+                <p class="card-description">Used correctly, they flatten hierarchies, increase engagement, and make leaders more relatable.</p>
+            </div>
+            <div class="card">
+                <h3 class="card-title">⚠️ They require critical awareness</h3>
+                <p class="card-description">Effective use demands cultural awareness, emotional intelligence, and context sensitivity to avoid misfires.</p>
+            </div>
+        </div>
+        
+        <div class="card" style="margin-top: 3rem; text-align: center; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));">
+            <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">The Real Leadership Question</h3>
+            <p style="font-size: 1.2rem; line-height: 1.7; margin-bottom: 2rem;">
+                Not: "Should I use emojis as a leader?"<br>
+                But: <strong>"Has my leadership earned the emotional trust to use them meaningfully?"</strong>
+            </p>
+            <p style="font-style: italic; color: var(--text-secondary);">
+                Emojis don't lead — leaders do. They don't replace sincerity — they reflect it. Used well, they build bridges. Used poorly, they expose emotional gaps.
+            </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <h3 class="sub-title" style="margin-top:0;">Final Thought</h3>
+            <p style="color: var(--text-secondary); max-width: 800px; margin: 0 auto;">Leadership is no longer just strategic — it's emotional. Emojis are part of the digital body language that defines connection in modern teams. And sometimes, the most powerful message a leader can send... is just three symbols:</p>
+            <div style="font-size: 4rem; margin-top: 2rem;">
+                👂 👏 ❤️
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <p>© 2024 Emoji Leadership Research Team | Vladlena, Pari, Nizami, Sanam</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">
+                Transforming Digital Workplace Communication Through Data and Insight
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            themeIcon.textContent = currentTheme === 'dark' ? '🌙' : '☀️';
+            
+            themeToggle.addEventListener('click', () => {
+                const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+                updateChartsTheme(newTheme);
+            });
+
+            Chart.defaults.responsive = true;
+            Chart.defaults.maintainAspectRatio = false;
+            Chart.defaults.plugins.legend.labels.usePointStyle = true;
+            
+            function getChartColors(theme = 'dark') {
+                return theme === 'light' ? 
+                    { primary: '#6366f1', secondary: '#06d6a0', accent: '#ec4899', warning: '#f59e0b', danger: '#ef4444', success: '#10b981', text: '#1e293b', grid: '#e2e8f0', bg: '#f8fafc' } : 
+                    { primary: '#6366f1', secondary: '#06d6a0', accent: '#ec4899', warning: '#f59e0b', danger: '#ef4444', success: '#10b981', text: '#f8fafc', grid: '#374151', bg: '#0a0118' };
+            }
+
+            let charts = {};
+
+            function createCharts(theme = 'dark') {
+                const colors = getChartColors(theme);
+
+                const genCtx = document.getElementById('generationalChart').getContext('2d');
+                charts.generational = new Chart(genCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Gen Z & Millennials', 'Boomers'],
+                        datasets: [{
+                            label: 'Agreement (%)',
+                            data: [72, 41],
+                            backgroundColor: [colors.secondary, colors.warning],
+                            borderColor: [colors.secondary, colors.warning],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: context => `${context.parsed.x}% agree` } } },
+                        scales: {
+                            y: { ticks: { color: colors.text }, grid: { display: false } },
+                            x: { beginAtZero: true, max: 100, ticks: { color: colors.text }, grid: { color: colors.grid } }
+                        }
+                    }
+                });
+            }
+
+            function updateChartsTheme(theme) {
+                Object.values(charts).forEach(chart => chart.destroy());
+                charts = {};
+                setTimeout(() => createCharts(theme), 100);
+            }
+
+            createCharts(currentTheme);
+            
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                progressBar.style.width = (winScroll / height) * 100 + '%';
+            });
+
+            const particlesContainer = document.getElementById('particles');
+            if (particlesContainer) {
+                setInterval(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 8 + 's';
+                    particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                    particlesContainer.appendChild(particle);
+                    setTimeout(() => particle.remove(), 8000);
+                }, 300);
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.section').forEach(section => observer.observe(section));
+
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
+
+            const cultureEmojis = document.querySelectorAll('.culture-emoji');
+            const cultureInfo = document.getElementById('cultureInfo');
+            const cultureData = {
+                'thumbs-up': {
+                    content: `<h3 style="color: var(--accent-cyan); margin-bottom: 1.5rem;">👍 Thumbs-Up</h3><div class="culture-details"><p><strong>🇺🇸 U.S. & Western Europe:</strong> Generally seen as positive affirmation or approval.</p><p><strong>🌍 Middle East, South Asia:</strong> Can be interpreted as dismissive or even offensive.</p><div class="risk-box"><strong>⚠️ Corporate Impact:</strong> Slack messages using 👍 for task confirmation led to confusion in multinational teams, prompting cultural sensitivity training at companies like Netflix.</div></div>`
+                },
+                'clapping': {
+                    content: `<h3 style="color: var(--accent-cyan); margin-bottom: 1.5rem;">👏 Clapping Hands</h3><div class="culture-details"><p><strong>👥 Older Generations (Boomers, Gen X):</strong> Used to show appreciation or encouragement.</p><p><strong>🎯 Gen Z (especially in the 🇺🇸 U.S.):</strong> Often used sarcastically for emphasis (e.g., "Do 👏 your 👏 job") — which can be misread by managers.</p><div class="risk-box"><strong>⚠️ Sarcasm vs. Sincerity:</strong> A manager might see sincere praise while a younger employee reads it as a sarcastic jab.</div></div>`
+                },
+                'smiling': {
+                    content: `<h3 style="color: var(--accent-cyan); margin-bottom: 1.5rem;">😊 Smiling Face</h3><div class="culture-details"><p><strong>🌎 Western Cultures:</strong> Seen as friendly or polite.</p><p><strong>💼 Younger Professionals (Globally):</strong> Increasingly interpreted as passive-aggressive or insincere, especially when used after critical feedback.</p><div class="risk-box"><strong>⚠️ Politeness vs. Passive-Aggression:</strong> A simple "Okay 😊" after receiving critical feedback can be interpreted as dismissive rather than accepting.</div></div>`
+                },
+                'skull': {
+                    content: `<h3 style="color: var(--accent-cyan); margin-bottom: 1.5rem;">💀 Skull</h3><div class="culture-details"><p><strong>⚰️ Traditional Meaning:</strong> Death, danger, or horror.</p><p><strong>😂 Gen Z (🇺🇸 U.S., 🇬🇧 UK, 🇦🇺 Australia):</strong> Used humorously to mean "I'm dead (from laughing)."</p><div class="risk-box"><strong>⚠️ Corporate Risk:</strong> Misinterpretation by older or international colleagues can lead to genuine concern or confusion about a seemingly lighthearted comment.</div></div>`
+                }
+            };
+            
+            function updateCultureContent(cultureKey) {
+                cultureEmojis.forEach(e => e.classList.remove('active'));
+                document.querySelector(`.culture-emoji[data-culture="${cultureKey}"]`).classList.add('active');
+                cultureInfo.style.opacity = '0';
+                setTimeout(() => {
+                    cultureInfo.innerHTML = cultureData[cultureKey].content;
+                    cultureInfo.style.opacity = '1';
+                }, 300);
+            }
+            
+            cultureEmojis.forEach(emoji => emoji.addEventListener('click', () => updateCultureContent(emoji.dataset.culture)));
+            updateCultureContent('thumbs-up'); // Load initial content
+
+            const quizQuestions = [
+                {
+                    question: "According to Adobe's research, which part of the brain do emojis activate, similar to human faces?",
+                    answers: [ { text: "Amygdala", correct: false }, { text: "Fusiform Gyrus", correct: true }, { text: "Prefrontal Cortex", correct: false }, { text: "Hippocampus", correct: false } ],
+                    explanation: "Adobe (2022) found emojis activate the fusiform gyrus, the brain's facial recognition area, making them powerful emotional cues."
+                },
+                {
+                    question: "Why did the Better.com CEO's use of 😔 and 🙏 during layoffs fail spectacularly?",
+                    answers: [ { text: "He used the wrong emojis", correct: false }, { text: "The emojis clashed with the grave context", correct: true }, { text: "Employees prefer formal communication", correct: false }, { text: "The message was too short", correct: false } ],
+                    explanation: "The informal, emotional nature of emojis was completely tone-deaf for a serious event like mass layoffs, appearing insincere and manipulative."
+                },
+                {
+                    question: "In which culture can the 👍 emoji be seen as offensive or dismissive?",
+                    answers: [ { text: "United States", correct: false }, { text: "United Kingdom", correct: false }, { text: "Middle East & South Asia", correct: true }, { text: "Australia", correct: false } ],
+                    explanation: "While positive in the West, the thumbs-up can be a rude gesture in parts of the Middle East, South Asia, and other regions."
+                },
+                {
+                    question: "Which leadership style is most compatible with effective emoji use?",
+                    answers: [ { text: "Autocratic", correct: false }, { text: "Transactional", correct: false }, { text: "Laissez-faire", correct: false }, { text: "Transformational", correct: true } ],
+                    explanation: "Transformational leadership, which relies on empathy, vision, and connection, provides the authentic foundation needed for emojis to feel genuine."
+                },
+                {
+                    question: "What is the most critical prerequisite for a leader to use emojis successfully?",
+                    answers: [ { text: "A young workforce", correct: false }, { text: "An established foundation of trust", correct: true }, { text: "A corporate emoji guide", correct: false }, { text: "Using emojis in every message", correct: false } ],
+                    explanation: "Without pre-existing trust, emojis can seem manipulative or unprofessional. Trust is the currency that gives emojis their value in leadership."
+                }
+            ];
+
+            let currentQuestionIndex = 0;
+            let correctAnswers = 0;
+            const questionEl = document.getElementById('quizQuestion');
+            const answersEl = document.getElementById('quizAnswers');
+            const feedbackEl = document.getElementById('quizFeedback');
+            const nextBtn = document.getElementById('nextBtn');
+
+            function showQuestion() {
+                const q = quizQuestions[currentQuestionIndex];
+                questionEl.textContent = q.question;
+                answersEl.innerHTML = '';
+                feedbackEl.innerHTML = '';
+                nextBtn.style.display = 'none';
+                q.answers.forEach(a => {
+                    const btn = document.createElement('button');
+                    btn.className = 'quiz-btn';
+                    btn.textContent = a.text;
+                    btn.onclick = () => selectAnswer(a, btn);
+                    answersEl.appendChild(btn);
+                });
+            }
+
+            function selectAnswer(answer, btn) {
+                const q = quizQuestions[currentQuestionIndex];
+                Array.from(answersEl.children).forEach(b => {
+                    b.disabled = true;
+                    const choice = q.answers.find(a => a.text === b.textContent);
+                    if (choice.correct) b.classList.add('correct');
+                });
+                if (!answer.correct) btn.classList.add('incorrect');
+                else correctAnswers++;
+                
+                feedbackEl.innerHTML = `<div style="color: ${answer.correct ? 'var(--success)' : 'var(--danger)'};"><strong>${answer.correct ? '✅ Correct!' : '❌ Incorrect'}</strong><br><small>${q.explanation}</small></div>`;
+                nextBtn.style.display = 'block';
+            }
+
+            function showResults() {
+                const percentage = Math.round((correctAnswers / quizQuestions.length) * 100);
+                let emoji, message, color;
+                if (percentage >= 80) { emoji = '🏆'; message = 'Outstanding! You have mastered emoji leadership.'; color = 'var(--success)'; } 
+                else if (percentage >= 60) { emoji = '👍'; message = 'Well done! You grasp the key concepts.'; color = 'var(--accent-cyan)'; } 
+                else { emoji = '📚'; message = 'Good start! Review the key concepts to improve.'; color = 'var(--warning)'; }
+                
+                questionEl.innerHTML = `<div style="text-align: center;"><div style="font-size: 4rem; margin-bottom: 1rem;">${emoji}</div><h3>Quiz Complete!</h3><p style="font-size: 1.5rem; margin: 1rem 0; color: ${color};">Score: ${correctAnswers}/${quizQuestions.length} (${percentage}%)</p><p>${message}</p></div>`;
+                answersEl.innerHTML = '';
+                feedbackEl.innerHTML = '';
+                nextBtn.textContent = 'Retake Quiz';
+                nextBtn.onclick = () => window.location.reload();
+            }
+
+            nextBtn.onclick = () => {
+                currentQuestionIndex++;
+                currentQuestionIndex < quizQuestions.length ? showQuestion() : showResults();
+            };
+
+            showQuestion();
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
