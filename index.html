@@ -813,6 +813,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#team">Team</a></li>
                 <li><a href="#research">Research</a></li>
                 <li><a href="#applications">Applications</a></li>
                 <li><a href="#analysis">Analysis</a></li>
@@ -883,6 +884,37 @@
         </div>
     </section>
 
+    <!-- Team Section -->
+    <section id="team" class="section">
+        <h2 class="section-title"><span class="emoji">👥</span>Meet Our Research Team</h2>
+        
+        <div class="grid grid-4">
+            <div class="card team-member">
+                <div class="team-avatar">👱‍♀️</div>
+                <h3 class="team-name">Vladlena</h3>
+                <p class="team-role">Research & Cultural Analysis</p>
+            </div>
+            
+            <div class="card team-member">
+                <div class="team-avatar">👩🏻‍🏫</div>
+                <h3 class="team-name">Pari</h3>
+                <p class="team-role">Case Studies & Analysis</p>
+            </div>
+            
+            <div class="card team-member">
+                <div class="team-avatar">👨🏻‍💻</div>
+                <h3 class="team-name">Nizami</h3>
+                <p class="team-role">Research Methodology</p>
+            </div>
+            
+            <div class="card team-member">
+                <div class="team-avatar">👩🏻</div>
+                <h3 class="team-name">Sanam</h3>
+                <p class="team-role">Insights & Conclusions</p>
+            </div>
+        </div>
+    </section>
+
     <section id="research" class="section">
         <h2 class="section-title"><span class="emoji">🔬</span>Neuroscience & Psychology: The Power of Symbols</h2>
         <p style="text-align: center; max-width: 800px; margin: -2rem auto 4rem; color: var(--text-secondary);">Emojis are far more than cute icons — they engage the brain in specific, meaningful ways. Here's what the research says:</p>
@@ -927,6 +959,34 @@
                     This generational tension makes emoji leadership both a <strong>unifying tool and a communication risk</strong> — depending on audience, culture, and timing.
                  </p>
             </div>
+        </div>
+
+        <!-- Additional Charts from Second Code -->
+        <div class="chart-grid">
+            <div class="chart-container small-chart">
+                <div class="chart-title">🌍 Cultural Misinterpretation Risk</div>
+                <canvas id="culturalRiskChart"></canvas>
+            </div>
+            
+            <div class="chart-container small-chart">
+                <div class="chart-title">⚠️ Common Emoji Failures</div>
+                <canvas id="failureChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">🧠 Emoji Impact on Brain Activity</div>
+            <canvas id="brainActivityChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">📈 Business Metrics: Before vs After Emoji Implementation</div>
+            <canvas id="businessMetricsChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">📊 Leadership Style vs Emoji Effectiveness</div>
+            <canvas id="leadershipChart"></canvas>
         </div>
     </section>
     
@@ -1074,7 +1134,7 @@
             </div>
              <div class="card" style="border-left: 4px solid var(--warning);">
                 <h3 class="card-title">Netflix: Cultural Miscommunication</h3>
-                <p class="card-description">While 👍 is used for confirmation in the U.S., it’s seen as sarcastic or dismissive in some Asian and Middle Eastern cultures. This led to unintentional miscommunication.
+                <p class="card-description">While 👍 is used for confirmation in the U.S., it's seen as sarcastic or dismissive in some Asian and Middle Eastern cultures. This led to unintentional miscommunication.
                 <br><strong>Outcome:</strong> Required additional cultural training.</p>
             </div>
         </div>
@@ -1170,6 +1230,7 @@
             function createCharts(theme = 'dark') {
                 const colors = getChartColors(theme);
 
+                // Generational Chart
                 const genCtx = document.getElementById('generationalChart').getContext('2d');
                 charts.generational = new Chart(genCtx, {
                     type: 'bar',
@@ -1190,6 +1251,217 @@
                         scales: {
                             y: { ticks: { color: colors.text }, grid: { display: false } },
                             x: { beginAtZero: true, max: 100, ticks: { color: colors.text }, grid: { color: colors.grid } }
+                        }
+                    }
+                });
+
+                // Cultural Risk Chart
+                const culturalCtx = document.getElementById('culturalRiskChart').getContext('2d');
+                charts.cultural = new Chart(culturalCtx, {
+                    type: 'polarArea',
+                    data: {
+                        labels: ['👍 Thumbs Up', '👏 Clapping', '😊 Smiling', '💀 Skull'],
+                        datasets: [{
+                            data: [85, 65, 45, 90],
+                            backgroundColor: [
+                                colors.danger + '80',
+                                colors.warning + '80',
+                                colors.primary + '80',
+                                colors.accent + '80'
+                            ],
+                            borderColor: [colors.danger, colors.warning, colors.primary, colors.accent],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: colors.text }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `Risk Level: ${context.parsed}%`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            r: {
+                                ticks: { color: colors.text },
+                                grid: { color: colors.grid }
+                            }
+                        }
+                    }
+                });
+
+                // Failure Analysis Chart
+                const failureCtx = document.getElementById('failureChart').getContext('2d');
+                charts.failure = new Chart(failureCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Inappropriate Context', 'Cultural Misunderstanding', 'Generational Gap', 'Overuse', 'Poor Timing'],
+                        datasets: [{
+                            data: [35, 25, 20, 12, 8],
+                            backgroundColor: [
+                                colors.danger,
+                                colors.warning,
+                                colors.accent,
+                                colors.primary,
+                                colors.secondary
+                            ],
+                            borderWidth: 3,
+                            borderColor: theme === 'dark' ? '#0a0118' : '#f8fafc'
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: colors.text, padding: 15 }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.label}: ${context.parsed}%`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Brain Activity Chart
+                const brainCtx = document.getElementById('brainActivityChart').getContext('2d');
+                charts.brain = new Chart(brainCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Fusiform Gyrus (Face Recognition)', 'Language Centers', 'Visual Processing', 'Emotional Processing'],
+                        datasets: [{
+                            data: [45, 20, 25, 10],
+                            backgroundColor: [colors.primary, colors.secondary, colors.accent, colors.warning],
+                            borderWidth: 3,
+                            borderColor: theme === 'dark' ? '#0a0118' : '#f8fafc'
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: colors.text, padding: 20 }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.label}: ${context.parsed}% activation`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Business Metrics Chart
+                const businessCtx = document.getElementById('businessMetricsChart').getContext('2d');
+                charts.business = new Chart(businessCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024', 'Q2 2024'],
+                        datasets: [
+                            {
+                                label: 'Employee Engagement (%)',
+                                data: [65, 68, 72, 78, 82, 85],
+                                borderColor: colors.success,
+                                backgroundColor: colors.success + '20',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Communication Clarity Score',
+                                data: [70, 72, 75, 80, 84, 87],
+                                borderColor: colors.primary,
+                                backgroundColor: colors.primary + '20',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Team Satisfaction (%)',
+                                data: [68, 70, 74, 79, 83, 86],
+                                borderColor: colors.secondary,
+                                backgroundColor: colors.secondary + '20',
+                                tension: 0.4,
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                labels: { color: colors.text }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: { color: colors.text },
+                                grid: { color: colors.grid }
+                            },
+                            x: {
+                                ticks: { color: colors.text },
+                                grid: { color: colors.grid }
+                            }
+                        },
+                        interaction: {
+                            mode: 'nearest',
+                            axis: 'x',
+                            intersect: false
+                        }
+                    }
+                });
+
+                // Leadership Effectiveness Chart
+                const leadershipCtx = document.getElementById('leadershipChart').getContext('2d');
+                charts.leadership = new Chart(leadershipCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Authenticity', 'Team Connection', 'Communication Clarity', 'Cultural Sensitivity', 'Generational Appeal'],
+                        datasets: [
+                            {
+                                label: 'Transformational Leadership',
+                                data: [95, 90, 85, 80, 88],
+                                borderColor: colors.success,
+                                backgroundColor: colors.success + '20',
+                                pointBackgroundColor: colors.success
+                            },
+                            {
+                                label: 'Autocratic Leadership',
+                                data: [45, 35, 60, 40, 25],
+                                borderColor: colors.danger,
+                                backgroundColor: colors.danger + '20',
+                                pointBackgroundColor: colors.danger
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: { color: colors.text },
+                                grid: { color: colors.grid },
+                                pointLabels: { color: colors.text }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                labels: { color: colors.text }
+                            }
                         }
                     }
                 });
