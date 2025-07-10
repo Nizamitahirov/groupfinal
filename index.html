@@ -1,4 +1,3 @@
-html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +38,7 @@ html
             --bg-tertiary: #e2e8f0;
             --text-primary: #1e293b;
             --text-secondary: #475569;
-            --text-muted: #64748b;
+            --text-muted: #94a3b8;
             --glass-bg: rgba(0, 0, 0, 0.03);
             --glass-border: rgba(0, 0, 0, 0.1);
             --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.2);
@@ -530,10 +529,6 @@ html
             transition: var(--transition);
         }
 
-        [data-theme="light"] .team-avatar::before {
-            background: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.05), transparent);
-        }
-
         .team-member:hover .team-avatar::before {
             animation: shimmer 1.5s ease-in-out;
         }
@@ -573,10 +568,6 @@ html
             border: 1px solid var(--glass-border);
             position: relative;
             overflow: hidden;
-        }
-
-        [data-theme="light"] .stat-card {
-             background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 214, 160, 0.1));
         }
 
         .stat-number {
@@ -736,10 +727,6 @@ html
             margin: 0 auto;
             transition: opacity 0.5s ease;
         }
-        
-        [data-theme="light"] .culture-info h3 {
-             color: var(--accent-purple);
-        }
 
         .culture-info h3 {
             text-align: center;
@@ -832,7 +819,7 @@ html
 
         .chart-container {
             position: relative;
-            height: 480px; 
+            height: 580px; /* FIXED: Increased height from 450px to 500px */
             margin: 1.5rem 0;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -877,30 +864,6 @@ html
         .custom-table thead tr {
             background: rgba(99, 102, 241, 0.1);
         }
-        
-        [data-theme="light"] .custom-table thead tr {
-            background: rgba(99, 102, 241, 0.15);
-        }
-        
-        /* ===================================== */
-        /*          LIGHT MODE FIXES             */
-        /* ===================================== */
-        [data-theme="light"] .custom-table th {
-             color: var(--text-primary);
-        }
-        [data-theme="light"] .custom-table td {
-             color: var(--text-secondary);
-        }
-        [data-theme="light"] .custom-table td:nth-child(2) {
-             color: var(--text-primary); /* For the centered bold percentages */
-        }
-        [data-theme="light"] .conclusion-quote-card p {
-            color: var(--text-primary);
-        }
-        [data-theme="light"] .conclusion-quote-card p.italic-text {
-             color: var(--text-secondary);
-        }
-
 
         .custom-table td:nth-child(2) {
             text-align: center;
@@ -947,10 +910,9 @@ html
                     <span id="themeIcon">🌙</span>
                 </button>
             </div>
-            <!-- FIXED: Navigation links reordered for logical flow -->
             <ul class="nav-links">
-                <li><a href="#team">Team</a></li>
                 <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#team">Team</a></li>
                 <li><a href="#research">Research</a></li>
                 <li><a href="#applications">Applications</a></li>
                 <li><a href="#analysis">Analysis</a></li>
@@ -976,8 +938,7 @@ html
         </div>
     </section>
 
-    <!-- FIXED: Team section now comes first -->
-    <section id="team" class="section">
+        <section id="team" class="section">
         <h2 class="section-title"><span class="emoji">👥</span>Meet Our Research Team</h2>
         <div class="grid grid-4">
             <div class="card team-member">
@@ -1002,8 +963,7 @@ html
             </div>
         </div>
     </section>
-
-    <!-- FIXED: Introduction section now comes after the Team section -->
+    
     <section id="introduction" class="section">
         <h2 class="section-title"><span class="emoji">🎯</span>The Central Argument</h2>
         <div class="card">
@@ -1054,7 +1014,19 @@ html
                 </p>
             </div>
         </div>
+        <div class="chart-grid">
+            <div class="chart-container">
+                <div class="chart-title">📊 Cultural Risk of Emoji Misinterpretation</div>
+                <canvas id="culturalRiskChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">📊 Reasons for Emoji Communication Failure</div>
+                <canvas id="failureChart"></canvas>
+            </div>
+        </div>
     </section>
+
+
 
     <section id="research" class="section">
         <h2 class="section-title"><span class="emoji">🔬</span>Neuroscience & Psychology: The Power of Symbols</h2>
@@ -1088,20 +1060,33 @@ html
             </div>
         </div>
         <h3 class="sub-title">Generational Divide: Who Likes Emoji Leadership?</h3>
-        
-        <div class="card" style="margin: 0 auto; max-width: 900px;">
-            <h3 class="card-title">Key Insights on the Divide</h3>
-            <p class="card-description">
-                <strong style="color:var(--accent-cyan)">Slack's Future of Work Survey (2022):</strong> Shows a
-                clear split. Younger generations embrace this new form of communication from leaders.
-                <br><br>
-                <strong style="color:var(--accent-cyan)">McKinsey Insight (2023):</strong> Informal communication
-                increases perceived leadership accessibility among younger employees, but older workers may see it
-                as a loss of authority.
-                <br><br>
-                This generational tension makes emoji leadership both a <strong>unifying tool and a communication
-                    risk</strong> — depending on audience, culture, and timing.
-            </p>
+        <div class="chart-grid">
+            <div class="chart-container">
+                <div class="chart-title">🧠 Emoji Impact on Brain Activity</div>
+                <canvas id="brainActivityChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">📈 Business Metrics: Before vs After Emoji Implementation</div>
+                <canvas id="businessMetricsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">📊 Manager Emoji Use: "Makes communication more human"</div>
+                <canvas id="generationalChart"></canvas>
+            </div>
+            <div class="card">
+                <h3 class="card-title">Key Insights on the Divide</h3>
+                <p class="card-description">
+                    <strong style="color:var(--accent-cyan)">Slack's Future of Work Survey (2022):</strong> Shows a
+                    clear split. Younger generations embrace this new form of communication from leaders.
+                    <br><br>
+                    <strong style="color:var(--accent-cyan)">McKinsey Insight (2023):</strong> Informal communication
+                    increases perceived leadership accessibility among younger employees, but older workers may see it
+                    as a loss of authority.
+                    <br><br>
+                    This generational tension makes emoji leadership both a <strong>unifying tool and a communication
+                        risk</strong> — depending on audience, culture, and timing.
+                </p>
+            </div>
         </div>
     </section>
 
@@ -1176,30 +1161,31 @@ html
         <!-- SAĞ SÜTUN ÜÇÜN KONTEYNER -->
         <div class="card">
             <h3 class="card-title" style="text-align: center; color: var(--text-primary);">Work Usage Statement Agreement</h3>
-            <div style="overflow-x: auto;">
-                <table class="custom-table">
-                    <thead>
-                        <tr>
-                            <th>Statement</th>
-                            <th style="text-align: center;">Gen Z</th>
-                            <th style="text-align: center;">Millennial</th>
-                            <th style="text-align: center;">Gen X</th>
-                            <th style="text-align: center;">Boomer</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Using emoji positively affects the likability of the person communicating with me</td><td style="text-align: center;">72%</td><td style="text-align: center;">75%</td><td style="text-align: center;">68%</td><td style="text-align: center;">59%*</td></tr>
-                        <tr><td>Emoji make positive news or feedback more sincere</td><td style="text-align: center;">72%</td><td style="text-align: center;">73%</td><td style="text-align: center;">65%*</td><td style="text-align: center;">55%*</td></tr>
-                        <tr><td>Using emoji helps build friendlier relationships with newly hired team members</td><td style="text-align: center;">71%</td><td style="text-align: center;">75%</td><td style="text-align: center;">68%</td><td style="text-align: center;">54%*</td></tr>
-                        <tr><td>I feel more connected to my team/company when coworkers use emoji</td><td style="text-align: center;">70%</td><td style="text-align: center;">71%</td><td style="text-align: center;">60%*</td><td style="text-align: center;">49%*</td></tr>
-                        <tr><td>I like when people use emoji to communicate with me at work</td><td style="text-align: center;">69%</td><td style="text-align: center;">76%</td><td style="text-align: center;">67%</td><td style="text-align: center;">57%*</td></tr>
-                        <tr><td>Using emoji helps me feel more connected to remote colleagues I haven't met</td><td style="text-align: center;">69%</td><td style="text-align: center;">70%</td><td style="text-align: center;">59%*</td><td style="text-align: center;">48%*</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Statement</th>
+                        <th style="text-align: center;">Gen Z</th>
+                        <th style="text-align: center;">Millennial</th>
+                        <th style="text-align: center;">Gen X</th>
+                        <th style="text-align: center;">Boomer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Using emoji positively affects the likability of the person communicating with me</td><td style="text-align: center;">72%</td><td style="text-align: center;">75%</td><td style="text-align: center;">68%</td><td style="text-align: center;">59%*</td></tr>
+                    <tr><td>Emoji make positive news or feedback more sincere</td><td style="text-align: center;">72%</td><td style="text-align: center;">73%</td><td style="text-align: center;">65%*</td><td style="text-align: center;">55%*</td></tr>
+                    <tr><td>Using emoji helps build friendlier relationships with newly hired team members</td><td style="text-align: center;">71%</td><td style="text-align: center;">75%</td><td style="text-align: center;">68%</td><td style="text-align: center;">54%*</td></tr>
+                    <tr><td>I feel more connected to my team/company when coworkers use emoji</td><td style="text-align: center;">70%</td><td style="text-align: center;">71%</td><td style="text-align: center;">60%*</td><td style="text-align: center;">49%*</td></tr>
+                    <tr><td>I like when people use emoji to communicate with me at work</td><td style="text-align: center;">69%</td><td style="text-align: center;">76%</td><td style="text-align: center;">67%</td><td style="text-align: center;">57%*</td></tr>
+                    <tr><td>Using emoji helps me feel more connected to remote colleagues I haven't met</td><td style="text-align: center;">69%</td><td style="text-align: center;">70%</td><td style="text-align: center;">59%*</td><td style="text-align: center;">48%*</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
+    <!-- ==================================================================== -->
+    <!--            BÜTÜN JAVASCRIPT BU BÖLMƏNİN İÇİNDƏDİR                 -->
+    <!-- ==================================================================== -->
     <script>
     document.addEventListener('DOMContentLoaded', function () {
     
@@ -1219,82 +1205,61 @@ html
             };
         }
 
-        function setupCharts() {
-            const colors = getChartThemeColors();
+        const colors = getChartThemeColors();
 
-            const barChartDefaultOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { callbacks: { label: context => `${context.parsed.y}%` } }
-                },
-                scales: {
-                    x: { ticks: { color: colors.text }, grid: { display: false } }
-                }
-            };
-            
-            let chartInstances = [
-                Chart.getChart('emojiIncreaseChartComplete'),
-                Chart.getChart('emojiReasonBuildChartComplete'),
-                Chart.getChart('emojiReasonReadChartComplete')
-            ];
-            chartInstances.forEach(instance => {
-                if(instance) instance.destroy();
+        const barChartDefaultOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: context => `${context.parsed.y}%` } }
+            },
+            scales: {
+                x: { ticks: { color: colors.text }, grid: { display: false } }
+            }
+        };
+
+        // --- Chart 1: Artan Emoji İstifadəsi (Doughnut Chart) ---
+        const emojiIncreaseCtx = document.getElementById('emojiIncreaseChartComplete');
+        if (emojiIncreaseCtx) {
+            new Chart(emojiIncreaseCtx.getContext('2d'), {
+                type: 'doughnut',
+                data: { datasets: [{ data: [63, 37], backgroundColor: [colors.cyan, colors.doughnutBackground], borderColor: [colors.cyan, colors.doughnutBackground], borderWidth: 2 }] },
+                options: { cutout: '80%', plugins: { legend: { display: false }, tooltip: { enabled: false } }, responsive: true, maintainAspectRatio: false }
             });
-
-
-            const emojiIncreaseCtx = document.getElementById('emojiIncreaseChartComplete');
-            if (emojiIncreaseCtx) {
-                new Chart(emojiIncreaseCtx.getContext('2d'), {
-                    type: 'doughnut',
-                    data: { datasets: [{ data: [63, 37], backgroundColor: [colors.cyan, colors.doughnutBackground], borderColor: [colors.cyan, colors.doughnutBackground], borderWidth: 2 }] },
-                    options: { cutout: '80%', plugins: { legend: { display: false }, tooltip: { enabled: false } }, responsive: true, maintainAspectRatio: false }
-                });
-            }
-
-            const emojiReasonBuildCtx = document.getElementById('emojiReasonBuildChartComplete');
-            if (emojiReasonBuildCtx) {
-                new Chart(emojiReasonBuildCtx.getContext('2d'), {
-                    type: 'bar',
-                    data: { labels: ['Gen Z', 'Millennial', 'Gen X', 'Boomer'], datasets: [{ data: [50, 46, 41, 37], backgroundColor: colors.pink, borderRadius: 5 }] },
-                    options: {
-                        ...barChartDefaultOptions,
-                        scales: {
-                            ...barChartDefaultOptions.scales,
-                            y: { beginAtZero: true, max: 60, ticks: { color: colors.text, stepSize: 10, callback: value => value + '%' }, grid: { color: colors.grid } }
-                        }
-                    }
-                });
-            }
-
-            const emojiReasonReadCtx = document.getElementById('emojiReasonReadChartComplete');
-            if (emojiReasonReadCtx) {
-                new Chart(emojiReasonReadCtx.getContext('2d'), {
-                    type: 'bar',
-                    data: { labels: ['Gen Z', 'Millennial', 'Gen X', 'Boomer'], datasets: [{ data: [39, 33, 23, 17], backgroundColor: colors.pink, borderRadius: 5 }] },
-                    options: {
-                        ...barChartDefaultOptions,
-                        scales: {
-                            ...barChartDefaultOptions.scales,
-                            y: { beginAtZero: true, max: 50, ticks: { color: colors.text, stepSize: 5, callback: value => value + '%' }, grid: { color: colors.grid } }
-                        }
-                    }
-                });
-            }
         }
-        
-        setupCharts();
-        
-        const themeObserver = new MutationObserver((mutationsList) => {
-            for(const mutation of mutationsList) {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-                    setupCharts();
-                }
-            }
-        });
 
-        themeObserver.observe(document.body, { attributes: true });
+        // --- Chart 2: Əlaqə Qurmaq üçün (Bar Chart) ---
+        const emojiReasonBuildCtx = document.getElementById('emojiReasonBuildChartComplete');
+        if (emojiReasonBuildCtx) {
+            new Chart(emojiReasonBuildCtx.getContext('2d'), {
+                type: 'bar',
+                data: { labels: ['Gen Z', 'Millennial', 'Gen X', 'Boomer'], datasets: [{ data: [50, 46, 41, 37], backgroundColor: colors.pink, borderRadius: 5 }] },
+                options: {
+                    ...barChartDefaultOptions,
+                    scales: {
+                        ...barChartDefaultOptions.scales,
+                        y: { beginAtZero: true, max: 60, ticks: { color: colors.text, stepSize: 10, callback: value => value + '%' }, grid: { color: colors.grid } }
+                    }
+                }
+            });
+        }
+
+        // --- Chart 3: Cavab Alma Şansını Artırmaq üçün (Bar Chart) ---
+        const emojiReasonReadCtx = document.getElementById('emojiReasonReadChartComplete');
+        if (emojiReasonReadCtx) {
+            new Chart(emojiReasonReadCtx.getContext('2d'), {
+                type: 'bar',
+                data: { labels: ['Gen Z', 'Millennial', 'Gen X', 'Boomer'], datasets: [{ data: [39, 33, 23, 17], backgroundColor: colors.pink, borderRadius: 5 }] },
+                options: {
+                    ...barChartDefaultOptions,
+                    scales: {
+                        ...barChartDefaultOptions.scales,
+                        y: { beginAtZero: true, max: 50, ticks: { color: colors.text, stepSize: 5, callback: value => value + '%' }, grid: { color: colors.grid } }
+                    }
+                }
+            });
+        }
     });
     </script>
 </section>
@@ -1389,6 +1354,7 @@ html
     </div>
 </section>
 
+<!-- Bu CSS kodunu <style> teqinizin içinə əlavə edin -->
 <style>
     .reasons-grid {
         display: grid;
@@ -1426,7 +1392,7 @@ html
         color: var(--bg-primary);
         font-weight: 700;
         font-size: 0.9rem;
-        min-width: 40px;
+        min-width: 40px; /* Ensure even small percentages are readable */
     }
 
     .cell-gen {
@@ -1435,13 +1401,9 @@ html
         font-size: 1rem;
         padding: 0.5rem 0;
         border-left: 1px solid var(--glass-border);
-        color: var(--text-primary);
-    }
-    
-    [data-theme="light"] .bar {
-        color: var(--text-primary);
     }
 
+    /* Remove left border for the first generation cell */
     .reasons-grid > .cell-gen:nth-of-type(6n+3) {
         border-left: none;
     }
@@ -1459,10 +1421,10 @@ html
     
     @media (max-width: 768px) {
         .reasons-grid {
-            display: block;
+            display: block; /* Switch to block layout on small screens */
         }
         .reasons-header {
-            display: none;
+            display: none; /* Hide headers on mobile */
         }
         .reasons-grid > div {
             margin-bottom: 1rem;
@@ -1476,7 +1438,7 @@ html
             margin-top: 1.5rem;
         }
         .reasons-grid > .cell-gen {
-            display: none;
+            display: none; /* Hide generation data on mobile to prevent clutter. The bar chart remains */
         }
     }
 </style>
@@ -1537,6 +1499,9 @@ html
     </p>
 
     <div class="grid grid-2">
+        <!-- ======================================================= -->
+        <!--                  MÜSBƏT NÜMUNƏ KARTI                   -->
+        <!-- ======================================================= -->
         <div class="card example-card positive-example">
             <h3 class="card-title" style="color: var(--success);">✅ Positive Example: Marc Benioff, Salesforce CEO</h3>
             <div class="example-meta">
@@ -1561,6 +1526,9 @@ html
             </div>
         </div>
 
+        <!-- ======================================================= -->
+        <!--                   MƏNFİ NÜMUNƏ KARTI                   -->
+        <!-- ======================================================= -->
         <div class="card example-card negative-example">
             <h3 class="card-title" style="color: var(--danger);">❌ Negative Example: Goldman Sachs Layoff Slack Thread</h3>
              <div class="example-meta">
@@ -1586,6 +1554,7 @@ html
     </div>
 </section>
 
+<!-- Bu CSS kodunu <style> teqinizin içinə əlavə edin -->
 <style>
     .example-card {
         display: flex;
@@ -1615,7 +1584,7 @@ html
         font-family: 'Georgia', serif;
         font-style: italic;
         color: var(--text-secondary);
-        flex-grow: 1;
+        flex-grow: 1; /* Blokun hündürlüyünü bərabərləşdirməyə kömək edir */
     }
     
     [data-theme="light"] .message-block {
@@ -1643,26 +1612,27 @@ html
     }
     .reasons-list li {
         position: relative;
-        padding-left: 2em;
+        padding-left: 2em; /* Simvol üçün yer saxlayır */
         margin-bottom: 0.75rem;
     }
     .reasons-list li::before {
         position: absolute;
         left: 0;
         top: 0;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Inter', sans-serif; /* Simvolun düzgün görünməsi üçün */
         font-style: normal;
         font-weight: 900;
         font-size: 1.2em;
         line-height: 1;
     }
 
+    /* Müsbət və mənfi listlər üçün xüsusi simvollar və rənglər */
     .positive-list li::before {
-        content: '⊞';
+        content: '⊞'; /* Squared Plus */
         color: var(--success);
     }
     .negative-list li::before {
-        content: '⊟';
+        content: '⊟'; /* Squared Minus */
         color: var(--danger);
     }
 
@@ -1676,6 +1646,9 @@ html
     </p>
 
     <div class="grid grid-3">
+        <!-- ======================================================= -->
+        <!--              GOLDMAN SACHS NÜMUNƏ KARTI                  -->
+        <!-- ======================================================= -->
         <div class="card risk-card">
             <h3 class="card-title" style="color: var(--danger);">Goldman Sachs – Slack Missteps During Layoffs</h3>
             <ul class="risk-list">
@@ -1685,6 +1658,9 @@ html
             </ul>
         </div>
 
+        <!-- ======================================================= -->
+        <!--             MITSUBISHI NÜMUNƏ KARTI                    -->
+        <!-- ======================================================= -->
         <div class="card risk-card">
              <h3 class="card-title" style="color: var(--warning);">Mitsubishi Corp – Generational and Cultural Misalignment</h3>
              <ul class="risk-list">
@@ -1694,6 +1670,9 @@ html
             </ul>
         </div>
 
+        <!-- ======================================================= -->
+        <!--                NETFLIX NÜMUNƏ KARTI                    -->
+        <!-- ======================================================= -->
         <div class="card risk-card">
             <h3 class="card-title" style="color: var(--accent-orange);">Netflix – Conflicting Emoji Meanings Across Cultures</h3>
              <ul class="risk-list">
@@ -1704,13 +1683,14 @@ html
     </div>
 </section>
 
+<!-- Bu CSS kodunu <style> teqinizin içinə əlavə edin -->
 <style>
     .risk-card {
         border-left: 4px solid;
     }
     .risk-card:nth-child(1) { border-color: var(--danger); }
     .risk-card:nth-child(2) { border-color: var(--warning); }
-    .risk-card:nth-child(3) { border-color: var(--accent-orange, #f59e0b); }
+    .risk-card:nth-child(3) { border-color: var(--accent-orange, #f59e0b); } /* accent-orange yoxdursa, default narıncı */
 
     .risk-list {
         list-style: none;
@@ -1725,7 +1705,7 @@ html
         line-height: 1.6;
     }
     .risk-list li::before {
-        content: '⊟';
+        content: '⊟'; /* Squared Minus */
         position: absolute;
         left: 0;
         top: 2px;
@@ -1750,6 +1730,9 @@ html
     
     <div class="insight-grid">
         
+        <!-- ======================================================= -->
+        <!--                      SOL SÜTUN                         -->
+        <!-- ======================================================= -->
         <div class="insight-card">
             <h3 class="insight-title"><span class="insight-icon">📊</span>Generational Divide: Who Likes Emoji Leadership?</h3>
             
@@ -1766,6 +1749,7 @@ html
                 <p>Informal communication increases perceived leadership accessibility among younger employees, but older workers may see it as a loss of authority.</p>
             </div>
             
+            <!-- Qrafik bu kartın içində yerləşdirilib -->
             <div class="chart-block">
                 <h4 style="text-align: center; color: var(--text-secondary); font-weight: 500;">Agreement with "More Human" Communication</h4>
                 <div style="position: relative; height: 250px; margin-top: 1rem;">
@@ -1778,6 +1762,9 @@ html
             </div>
         </div>
 
+        <!-- ======================================================= -->
+        <!--                       SAĞ SÜTUN                        -->
+        <!-- ======================================================= -->
         <div style="display: flex; flex-direction: column; gap: 2rem;">
             <div class="insight-card">
                 <h3 class="insight-title"><span class="insight-icon">💬</span>The Rise of "Digital Body Language"</h3>
@@ -1795,6 +1782,7 @@ html
     </div>
 </section>
 
+<!-- Bu CSS kodunu <style> teqinizin içinə əlavə edin -->
 <style>
     .insight-grid {
         display: grid;
@@ -1809,6 +1797,7 @@ html
         padding: 2.5rem;
         height: 100%;
         transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        /* Giriş animasiyası üçün */
         opacity: 0;
         transform: translateY(20px);
         animation: fadeInUp 0.6s ease-out forwards;
@@ -1835,7 +1824,6 @@ html
         font-family: 'Space Grotesk', sans-serif;
         font-size: 1.8rem;
         margin-bottom: 2rem;
-        color: var(--text-primary);
     }
     .insight-icon {
         font-size: 1.5rem;
@@ -1864,9 +1852,6 @@ html
         border-left: 3px solid var(--accent-purple);
         margin-top: 1.5rem;
     }
-    [data-theme="light"] .highlight-block {
-        background: rgba(99, 102, 241, 0.15);
-    }
     .highlight-block p {
         margin: 0;
         font-size: 0.95rem;
@@ -1881,11 +1866,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const chartCanvas = document.getElementById('insight-generational-chart');
     if (!chartCanvas) return;
 
-    let genChartInstance;
-
     const renderChart = () => {
-        if (typeof Chart === 'undefined') return;
-        if (genChartInstance) genChartInstance.destroy();
+        if (typeof Chart === 'undefined' || Chart.getChart(chartCanvas)) return;
 
         const colors = {
             primary: '#6366f1',
@@ -1894,7 +1876,7 @@ document.addEventListener('DOMContentLoaded', () => {
             grid: 'transparent',
         };
 
-        genChartInstance = new Chart(chartCanvas.getContext('2d'), {
+        new Chart(chartCanvas.getContext('2d'), {
             type: 'bar',
             data: {
                 labels: ['Gen Z & Millennials', 'Boomers'],
@@ -1916,25 +1898,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
-    
-    const observerCallback = (entries, observer) => {
+
+    const observer = new IntersectionObserver((entries, observer) => {
         if (entries[0].isIntersecting) {
             renderChart();
-            
-            const themeObserver = new MutationObserver((mutationsList) => {
-                for(const mutation of mutationsList) {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-                        renderChart();
-                    }
-                }
-            });
-            themeObserver.observe(document.body, { attributes: true });
-
             observer.unobserve(entries[0].target);
         }
-    };
+    }, { threshold: 0.5 });
 
-    const observer = new IntersectionObserver(observerCallback, { threshold: 0.5 });
     observer.observe(chartCanvas);
 });
 </script>
@@ -1944,7 +1915,9 @@ document.addEventListener('DOMContentLoaded', () => {
 <section id="leadership-command-center" class="section">
     <h2 class="section-title"><span class="emoji">🚀</span>Leadership Command Center</h2>
 
+    <!-- 3D ÇEVRİLƏN KARTLAR -->
     <div class="flip-card-grid">
+        <!-- Kart 1 -->
         <div class="flip-card" style="--i: 0;">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -1958,6 +1931,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         </div>
+        <!-- Kart 2 -->
         <div class="flip-card" style="--i: 1;">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -1971,6 +1945,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         </div>
+        <!-- Kart 3 -->
         <div class="flip-card" style="--i: 2;">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -1984,6 +1959,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         </div>
+        <!-- Kart 4 -->
         <div class="flip-card" style="--i: 3;">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -1999,6 +1975,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 
+    <!-- ======================================================= -->
+    <!--          XÜSUSİ DİZAYNLI İNFOQRAFİKA KARTI              -->
+    <!-- ======================================================= -->
     <div class="infographic-cc-container">
         <div class="infographic-cc-card">
             <div class="cc-bg-grid"></div>
@@ -2010,6 +1989,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
 
             <div class="cc-body">
+                <!-- Sütun 1: Faydalar -->
                 <div class="cc-column">
                     <h3 class="cc-title" style="--glow-color: var(--success);">✅ KEY BENEFITS</h3>
                     <ul>
@@ -2019,6 +1999,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </ul>
                 </div>
 
+                <!-- Sütun 2: Nümunələr -->
                 <div class="cc-column">
                     <h3 class="cc-title" style="--glow-color: var(--accent-cyan);">🏢 REAL-WORLD EXAMPLES</h3>
                     <ul>
@@ -2028,11 +2009,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     </ul>
                 </div>
 
+                <!-- Sütun 3: Risklər -->
                 <div class="cc-column">
                     <h3 class="cc-title" style="--glow-color: var(--danger);">⚠️ RISKS</h3>
                     <ul>
                         <li>Misuse during crises (e.g. layoffs).</li>
-                        <li>Cultural misinterpretation (e.g. 👍).</li>
+                        <li>Cultural misinterpretation (e.g. 🖼️).</li>
                         <li>Generational divide in perception.</li>
                     </ul>
                 </div>
@@ -2041,7 +2023,9 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 </section>
 
+<!-- Bu CSS kodunu <style> teqinizin içinə əlavə edin -->
 <style>
+    /* Flip Kartlar üçün Stillər */
     .flip-card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -2086,9 +2070,6 @@ document.addEventListener('DOMContentLoaded', () => {
         background: var(--bg-secondary);
         border: 1px solid var(--accent);
     }
-    [data-theme="light"] .flip-card-back {
-        background: var(--bg-tertiary);
-    }
     .flip-card-title {
         font-family: 'Space Grotesk', sans-serif;
         font-size: 1.5rem;
@@ -2114,6 +2095,7 @@ document.addEventListener('DOMContentLoaded', () => {
         opacity: 0.7;
     }
 
+    /* Command Center İnfoqrafika Stilləri */
     .infographic-cc-container {
         padding: 2rem 0;
     }
@@ -2129,11 +2111,6 @@ document.addEventListener('DOMContentLoaded', () => {
         overflow: hidden;
         border: 1px solid var(--glass-border);
     }
-    [data-theme="light"] .infographic-cc-card {
-        background: radial-gradient(ellipse at center, #e2e8f0, #f8fafc);
-        backdrop-filter: none;
-    }
-
     .cc-bg-grid {
         position: absolute;
         top: 0; left: 0;
@@ -2172,11 +2149,6 @@ document.addEventListener('DOMContentLoaded', () => {
         color: #fff;
         text-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-cyan);
     }
-    [data-theme="light"] .cc-header h2 {
-        color: var(--text-primary);
-        text-shadow: none;
-    }
-
     .cc-header p {
         color: var(--text-muted);
         text-transform: uppercase;
@@ -2201,18 +2173,12 @@ document.addEventListener('DOMContentLoaded', () => {
         background: rgba(255, 255, 255, 0.05);
         transform: translateY(-5px);
     }
-    [data-theme="light"] .cc-column:hover {
-        background: rgba(0, 0, 0, 0.05);
-    }
     .cc-title {
         font-family: 'Space Grotesk', sans-serif;
         font-weight: 600;
         margin-bottom: 1.5rem;
         color: var(--text-primary);
         text-shadow: 0 0 8px var(--glow-color);
-    }
-     [data-theme="light"] .cc-title {
-        text-shadow: none;
     }
     .cc-column ul {
         list-style: none;
@@ -2284,11 +2250,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <tr>
                             <td>Servant Leadership</td>
                             <td style="color: var(--success);">✅ High</td>
-                            <td>Focuses on team needs; emojis can support open and supportive tone.</td>
+                            <td>Focuses on team needs; emojis can support open and supportive tone.</td "></td>
                         </tr>
                         <tr>
                             <td>Democratic (Participative)</td>
-                            <td style="color: var(--success);">✅ High</td>
+                            <td style=" color: var(--success);">✅ High</td>
                             <td>Inclusive style; emojis help in building consensus and shared enthusiasm.</td>
                         </tr>
                         <tr>
@@ -2411,6 +2377,455 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="next-btn btn-primary" id="nextBtn" style="display: none;">Next Question →</button>
         </div>
     </section>
+    
+    
+    <!-- ====================================================================== -->
+<!-- ======================= STATISTICS CENTER START ====================== -->
+<!-- ====================================================================== -->
+
+<section id="statistics-dashboard" class="section">
+    <h2 class="section-title"><span class="emoji">📊</span> Statistics Center</h2>
+    <p style="text-align: center; max-width: 900px; margin: -2rem auto 4rem; color: var(--text-secondary);">
+        Interactive data visualizations showing the impact of emoji usage in the workplace and differences across generations.
+    </p>
+
+    <!-- Info Cards -->
+    <div class="info-card-grid">
+        <div class="card info-card">
+            <div class="info-card-icon" style="color: var(--accent-purple);">👥</div>
+            <div class="info-card-content">
+                <span class="info-card-value">78%</span>
+                <span class="info-card-label">Highest User Group (Gen Z & Millennial)</span>
+            </div>
+        </div>
+        <div class="card info-card">
+            <div class="info-card-icon" style="color: var(--accent-cyan);">📈</div>
+            <div class="info-card-content">
+                <span class="info-card-value">63%</span>
+                <span class="info-card-label">Usage Growth among Gen Z (1 year)</span>
+            </div>
+        </div>
+        <div class="card info-card">
+            <div class="info-card-icon" style="color: var(--accent-pink);">🤝</div>
+            <div class="info-card-content">
+                <span class="info-card-value">75%</span>
+                <span class="info-card-label">Millennials confirm likability effect</span>
+            </div>
+        </div>
+        <div class="card info-card">
+            <div class="info-card-icon" style="color: var(--danger);">🚫</div>
+            <div class="info-card-content">
+                <span class="info-card-value">25%</span>
+                <span class="info-card-label">Autocratic Leadership Effectiveness</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Chart Grid -->
+    <div class="chart-dashboard-grid">
+        <!-- Generational Emoji Perception Profile (Radar Chart) -->
+        <div class="card chart-wrapper radar-chart-wrapper">
+            <h3 class="chart-title">Generational Emoji Perception Profile</h3>
+            <canvas id="generationalPerceptionChart"></canvas>
+        </div>
+
+        <!-- Emoji Usage in the Workplace (Column Chart) -->
+        <div class="card chart-wrapper">
+            <h3 class="chart-title">Emoji Usage Rates in the Workplace</h3>
+            <canvas id="usageByGenerationChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-dashboard-grid-secondary">
+        <!-- Leadership Style Compatibility (Horizontal Bar Chart) -->
+        <div class="card chart-wrapper">
+            <h3 class="chart-title">Leadership Style & Emoji Compatibility</h3>
+            <canvas id="leadershipCompatibilityChart"></canvas>
+        </div>
+
+        <!-- Emoji Usage Reasons & Effectiveness (Donut & Waterfall) -->
+        <div class="secondary-charts-column">
+             <div class="card chart-wrapper small-chart-wrapper">
+                <h3 class="chart-title">Top Reason for Usage (Gen Z)</h3>
+                <canvas id="topReasonDonutChart"></canvas>
+             </div>
+             <div class="card chart-wrapper small-chart-wrapper">
+                <h3 class="chart-title">Leadership Effectiveness Change (Waterfall)</h3>
+                <canvas id="leadershipWaterfallChart"></canvas>
+             </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Info Card Styles */
+    .info-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .info-card {
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .info-card-icon {
+        font-size: 3rem;
+        line-height: 1;
+    }
+
+    .info-card-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-card-value {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.1;
+    }
+
+    .info-card-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.4;
+    }
+
+    /* Main Chart Grid */
+    .chart-dashboard-grid {
+        display: grid;
+        grid-template-columns: 2fr 1.2fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .chart-dashboard-grid-secondary {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 2rem;
+    }
+    
+    .secondary-charts-column {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .chart-wrapper {
+        padding: 2rem;
+        position: relative;
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .radar-chart-wrapper {
+        height: 500px;
+    }
+    
+    /* MODIFIED: Adjusted height and padding for better fit */
+    .small-chart-wrapper {
+        height: 280px; 
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .chart-wrapper canvas {
+        width: 100% !important;
+        height: 100% !important;
+        flex-grow: 1;
+    }
+
+    .chart-title {
+        text-align: center;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--accent-cyan);
+        flex-shrink: 0;
+    }
+    
+    [data-theme="light"] .chart-title {
+        color: var(--accent-purple);
+    }
+
+    /* Responsiveness */
+    @media (max-width: 1200px) {
+        .chart-dashboard-grid {
+            grid-template-columns: 1.5fr 1fr;
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .chart-dashboard-grid, .chart-dashboard-grid-secondary {
+            grid-template-columns: 1fr;
+        }
+        .chart-wrapper {
+            height: 450px;
+        }
+        .radar-chart-wrapper {
+             height: 500px;
+        }
+        .small-chart-wrapper {
+            height: 350px;
+        }
+    }
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if Chart.js is loaded
+    if (typeof Chart === 'undefined') {
+        console.error('Chart.js is not loaded. Cannot render statistics dashboard.');
+        return;
+    }
+
+    let allCharts = {}; // Object to hold all chart instances
+
+    // Function to define colors based on the theme
+    const getThemeColors = () => {
+        const isLight = document.body.dataset.theme === 'light';
+        return {
+            textColor: isLight ? '#1e293b' : '#f8fafc',
+            gridColor: isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
+            tooltipBg: isLight ? '#ffffff' : '#1a0b2e',
+            tooltipTitle: isLight ? '#1e293b' : '#f8fafc',
+            tooltipBody: isLight ? '#475569' : '#cbd5e1',
+            colors: {
+                purple: '#6366f1', cyan: '#06d6a0', pink: '#ec4899',
+                orange: '#f59e0b', green: '#10b981', red: '#ef4444',
+                yellow: '#f59e0b',
+            }
+        };
+    };
+    
+    // General tooltip configuration for Chart.js
+    const getTooltipConfig = (themeColors) => ({
+        backgroundColor: themeColors.tooltipBg,
+        titleColor: themeColors.tooltipTitle,
+        bodyColor: themeColors.tooltipBody,
+        borderColor: themeColors.gridColor,
+        borderWidth: 1, padding: 10, cornerRadius: 8,
+        displayColors: true, boxPadding: 4,
+    });
+
+    // Main function to create all charts
+    const renderAllCharts = () => {
+        // Destroy existing charts
+        Object.values(allCharts).forEach(chart => chart.destroy());
+        allCharts = {};
+
+        const theme = getThemeColors();
+        const tooltipConfig = getTooltipConfig(theme);
+        
+        // Data
+        const generations = ['Gen Z', 'Millennial', 'Gen X', 'Boomer'];
+        
+        // 1. Emoji Usage by Generation (Column Chart)
+        const usageCtx = document.getElementById('usageByGenerationChart')?.getContext('2d');
+        if (usageCtx) {
+            allCharts.usage = new Chart(usageCtx, {
+                type: 'bar',
+                data: {
+                    labels: generations,
+                    datasets: [{
+                        label: 'Usage Percentage',
+                        data: [78, 78, 69, 56],
+                        backgroundColor: [theme.colors.purple, theme.colors.cyan, theme.colors.pink, theme.colors.orange],
+                        borderRadius: 6, borderWidth: 0, barPercentage: 0.6,
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { ...tooltipConfig, callbacks: { label: (c) => ` ${c.raw}% use emojis` } }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true, max: 100,
+                            grid: { color: theme.gridColor, drawBorder: false },
+                            ticks: { color: theme.textColor, padding: 10, callback: (v) => v + '%' },
+                            title: { display: true, text: 'Usage Percentage', color: theme.textColor } // Y-AXIS TITLE
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: theme.textColor },
+                            title: { display: true, text: 'Generation', color: theme.textColor } // X-AXIS TITLE
+                        }
+                    }
+                }
+            });
+        }
+
+        // 2. Generational Perception Profile (Radar Chart)
+        const perceptionCtx = document.getElementById('generationalPerceptionChart')?.getContext('2d');
+        if (perceptionCtx) {
+            allCharts.perception = new Chart(perceptionCtx, {
+                type: 'radar',
+                data: {
+                    labels: ["Likability", "Sincerity", "Bonding (new hires)", "Team Cohesion", "Remote Connection"],
+                    datasets: [
+                        { label: 'Gen Z', data: [72, 72, 71, 70, 69], borderColor: theme.colors.purple, backgroundColor: theme.colors.purple + '33', pointBackgroundColor: theme.colors.purple },
+                        { label: 'Millennial', data: [75, 73, 75, 71, 70], borderColor: theme.colors.cyan, backgroundColor: theme.colors.cyan + '33', pointBackgroundColor: theme.colors.cyan },
+                        { label: 'Gen X', data: [68, 65, 68, 60, 59], borderColor: theme.colors.pink, backgroundColor: theme.colors.pink + '33', pointBackgroundColor: theme.colors.pink },
+                        { label: 'Boomer', data: [59, 55, 54, 49, 48], borderColor: theme.colors.orange, backgroundColor: theme.colors.orange + '33', pointBackgroundColor: theme.colors.orange }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { color: theme.textColor, usePointStyle: true, boxWidth: 8 } },
+                        tooltip: { ...tooltipConfig, callbacks: { label: (c) => ` ${c.dataset.label}: ${c.raw}% agree` } }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: { color: theme.gridColor },
+                            grid: { color: theme.gridColor },
+                            pointLabels: { color: theme.textColor, font: { size: 11 } },
+                            ticks: { display: false, stepSize: 20 },
+                            suggestedMin: 0, suggestedMax: 100
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 3. Leadership Compatibility (Horizontal Bar Chart)
+        const compatibilityCtx = document.getElementById('leadershipCompatibilityChart')?.getContext('2d');
+        if (compatibilityCtx) {
+            allCharts.compatibility = new Chart(compatibilityCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Transformational', 'Servant', 'Democratic', 'Transactional', 'Laissez-faire', 'Autocratic'],
+                    datasets: [{
+                        label: 'Compatibility Score',
+                        data: [95, 92, 90, 60, 45, 25],
+                        backgroundColor: [theme.colors.green, theme.colors.green, theme.colors.green, theme.colors.yellow, theme.colors.yellow, theme.colors.red],
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { ...tooltipConfig, callbacks: { label: (c) => ` Effectiveness: ${c.raw}/100` } }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true, max: 100,
+                            grid: { color: theme.gridColor, drawBorder: false },
+                            ticks: { color: theme.textColor },
+                            title: { display: true, text: 'Effectiveness Score', color: theme.textColor } // X-AXIS TITLE
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: theme.textColor },
+                            title: { display: true, text: 'Leadership Style', color: theme.textColor } // Y-AXIS TITLE
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 4. Top Usage Reason (Donut Chart)
+        const reasonCtx = document.getElementById('topReasonDonutChart')?.getContext('2d');
+        if(reasonCtx) {
+            allCharts.reasonDonut = new Chart(reasonCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Building Rapport', 'Other Reasons'],
+                    datasets: [{
+                        data: [50, 50], // Gen Z: 50%
+                        backgroundColor: [theme.colors.pink, theme.gridColor],
+                        borderColor: 'transparent', borderWidth: 4,
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true, ...tooltipConfig }
+                    }
+                }
+            });
+        }
+        
+        // 5. Leadership Effectiveness Change (Waterfall Chart - Faked with Floating Bars)
+        const waterfallCtx = document.getElementById('leadershipWaterfallChart')?.getContext('2d');
+        if(waterfallCtx) {
+            const leadershipData = [95, -3, -2, -30, -15, -20]; 
+            const waterfallData = [];
+            let current = 0;
+            leadershipData.forEach(val => {
+                const start = current;
+                const end = current + val;
+                waterfallData.push([start, end]);
+                current = end;
+            });
+
+            allCharts.waterfall = new Chart(waterfallCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Transformational', 'Servant', 'Democratic', 'Transactional', 'Laissez-faire', 'Autocratic'],
+                    datasets: [{
+                        data: waterfallData,
+                        backgroundColor: leadershipData.map(v => v > 0 ? theme.colors.green : theme.colors.red),
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { ...tooltipConfig, callbacks: { label: (c) => `Change: ${leadershipData[c.dataIndex]}` } }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: theme.gridColor }, ticks: { color: theme.textColor },
+                            title: { display: true, text: 'Cumulative Score', color: theme.textColor } // Y-AXIS TITLE
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: theme.textColor, font: { size: 9 } } // Show labels to understand the chart
+                        }
+                    }
+                }
+            });
+        }
+    };
+
+    // Initial render
+    renderAllCharts();
+
+    // Create a MutationObserver to watch for theme changes
+    const themeObserver = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+                // Re-render charts when the theme changes
+                setTimeout(renderAllCharts, 100); // Small delay to allow color transition
+            }
+        }
+    });
+
+    // Attach the observer to the body element
+    themeObserver.observe(document.body, { attributes: true });
+});
+</script>
+
+<!-- ====================================================================== -->
+<!-- ======================== STATISTICS CENTER END ======================= -->
+<!-- ====================================================================== -->
+    
 
     <section id="conclusion" class="section">
         <h2 class="section-title"><span class="emoji">🎯</span>Key Findings & Closing Thoughts</h2>
@@ -2431,15 +2846,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     context sensitivity to avoid misfires.</p>
             </div>
         </div>
-        <div class="card conclusion-quote-card"
+        <div class="card"
             style="margin-top: 3rem; text-align: center; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));">
             <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">The Real Leadership
                 Question</h3>
-            <p>
+            <p style="font-size: 1.2rem; line-height: 1.7; margin-bottom: 2rem;">
                 Not: "Should I use emojis as a leader?"<br>
                 But: <strong>"Has my leadership earned the emotional trust to use them meaningfully?"</strong>
             </p>
-            <p class="italic-text">
+            <p style="font-style: italic; color: var(--text-secondary);">
                 Emojis don't lead — leaders do. They don't replace sincerity — they reflect it. Used well, they build
                 bridges. Used poorly, they expose emotional gaps.
             </p>
@@ -2454,6 +2869,11 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
     </section>
+    
+    
+    
+    
+    
 
     <footer class="footer">
         <div style="max-width: 1400px; margin: 0 auto;">
@@ -2496,51 +2916,245 @@ document.addEventListener('DOMContentLoaded', () => {
             function createCharts(theme = 'dark') {
                 const colors = getChartColors(theme);
 
-                const leadershipCtx = document.getElementById('leadershipChart')?.getContext('2d');
-                if (leadershipCtx) {
-                    charts.leadership = new Chart(leadershipCtx, {
-                        type: 'radar',
-                        data: {
-                            labels: ['Authenticity', 'Team Connection', 'Clarity', 'Cultural Sensitivity', 'Generational Appeal'],
-                            datasets: [
-                                {
-                                    label: 'Transformational Leadership',
-                                    data: [95, 90, 85, 80, 88],
-                                    borderColor: colors.success,
-                                    backgroundColor: colors.success + '20',
-                                    pointBackgroundColor: colors.success
-                                },
-                                {
-                                    label: 'Autocratic Leadership',
-                                    data: [45, 35, 60, 40, 25],
-                                    borderColor: colors.danger,
-                                    backgroundColor: colors.danger + '20',
-                                    pointBackgroundColor: colors.danger
-                                }
-                            ]
-                        },
-                        options: {
-                            scales: {
-                                r: {
-                                    beginAtZero: true,
-                                    max: 100,
-                                    ticks: { color: colors.text, backdropColor: 'transparent' },
-                                    grid: { color: colors.grid },
-                                    pointLabels: { color: colors.text, font: {size: 11} }
-                                }
+                // Cultural Risk Chart
+                const culturalCtx = document.getElementById('culturalRiskChart').getContext('2d');
+                charts.cultural = new Chart(culturalCtx, {
+                    type: 'polarArea',
+                    data: {
+                        labels: ['👍 Thumbs Up', '👏 Clapping', '😊 Smiling', '💀 Skull'],
+                        datasets: [{
+                            data: [85, 65, 45, 90],
+                            backgroundColor: [
+                                colors.danger + '80',
+                                colors.warning + '80',
+                                colors.primary + '80',
+                                colors.accent + '80'
+                            ],
+                            borderColor: [colors.danger, colors.warning, colors.primary, colors.accent],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: colors.text }
                             },
-                            plugins: {
-                                legend: {
-                                    labels: { color: colors.text }
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return `Risk Level: ${context.parsed}%`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            r: {
+                                ticks: { color: colors.text },
+                                grid: { color: colors.grid }
+                            }
+                        }
+                    }
+                });
+
+                // Failure Analysis Chart
+                const failureCtx = document.getElementById('failureChart').getContext('2d');
+                charts.failure = new Chart(failureCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Inappropriate Context', 'Cultural Misunderstanding', 'Generational Gap', 'Overuse', 'Poor Timing'],
+                        datasets: [{
+                            data: [35, 25, 20, 12, 8],
+                            backgroundColor: [
+                                colors.danger,
+                                colors.warning,
+                                colors.accent,
+                                colors.primary,
+                                colors.secondary
+                            ],
+                            borderWidth: 3,
+                            borderColor: theme === 'dark' ? '#0a0118' : '#f8fafc'
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: colors.text, padding: 10 } // FIXED: Reduced padding
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return `${context.label}: ${context.parsed}%`;
+                                    }
                                 }
                             }
                         }
-                    });
-                }
+                    }
+                });
+
+                // Generational Chart
+                const genCtx = document.getElementById('generationalChart').getContext('2d');
+                charts.generational = new Chart(genCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Gen Z & Millennials', 'Boomers'],
+                        datasets: [{
+                            label: 'Agreement (%)',
+                            data: [72, 41],
+                            backgroundColor: [colors.secondary, colors.warning],
+                            borderColor: [colors.secondary, colors.warning],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: context => `${context.parsed.x}% agree` } } },
+                        scales: {
+                            y: { ticks: { color: colors.text }, grid: { display: false } },
+                            x: { beginAtZero: true, max: 100, ticks: { color: colors.text }, grid: { color: colors.grid } }
+                        }
+                    }
+                });
+
+                // Brain Activity Chart
+                const brainCtx = document.getElementById('brainActivityChart').getContext('2d');
+                charts.brain = new Chart(brainCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Fusiform Gyrus (Face Recognition)', 'Language Centers', 'Visual Processing', 'Emotional Processing'],
+                        datasets: [{
+                            data: [45, 20, 25, 10],
+                            backgroundColor: [colors.primary, colors.secondary, colors.accent, colors.warning],
+                            borderWidth: 3,
+                            borderColor: theme === 'dark' ? '#0a0118' : '#f8fafc'
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: colors.text, padding: 10 } // FIXED: Reduced padding
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return `${context.label}: ${context.parsed}% activation`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Business Metrics Chart
+                const businessCtx = document.getElementById('businessMetricsChart').getContext('2d');
+                charts.business = new Chart(businessCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024', 'Q2 2024'],
+                        datasets: [
+                            {
+                                label: 'Employee Engagement (%)',
+                                data: [65, 68, 72, 78, 82, 85],
+                                borderColor: colors.success,
+                                backgroundColor: colors.success + '20',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Communication Clarity Score',
+                                data: [70, 72, 75, 80, 84, 87],
+                                borderColor: colors.primary,
+                                backgroundColor: colors.primary + '20',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Team Satisfaction (%)',
+                                data: [68, 70, 74, 79, 83, 86],
+                                borderColor: colors.secondary,
+                                backgroundColor: colors.secondary + '20',
+                                tension: 0.4,
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                labels: { color: colors.text }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: { color: colors.text },
+                                grid: { color: colors.grid }
+                            },
+                            x: {
+                                ticks: { color: colors.text },
+                                grid: { color: colors.grid }
+                            }
+                        },
+                        interaction: {
+                            mode: 'nearest',
+                            axis: 'x',
+                            intersect: false
+                        }
+                    }
+                });
+
+                // Leadership Effectiveness Chart
+                const leadershipCtx = document.getElementById('leadershipChart').getContext('2d');
+                charts.leadership = new Chart(leadershipCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Authenticity', 'Team Connection', 'Communication Clarity', 'Cultural Sensitivity', 'Generational Appeal'],
+                        datasets: [
+                            {
+                                label: 'Transformational Leadership',
+                                data: [95, 90, 85, 80, 88],
+                                borderColor: colors.success,
+                                backgroundColor: colors.success + '20',
+                                pointBackgroundColor: colors.success
+                            },
+                            {
+                                label: 'Autocratic Leadership',
+                                data: [45, 35, 60, 40, 25],
+                                borderColor: colors.danger,
+                                backgroundColor: colors.danger + '20',
+                                pointBackgroundColor: colors.danger
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: { color: colors.text },
+                                grid: { color: colors.grid },
+                                pointLabels: { color: colors.text }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                labels: { color: colors.text }
+                            }
+                        }
+                    }
+                });
             }
 
             function updateChartsTheme(theme) {
-                Object.values(charts).forEach(chart => { if(chart) chart.destroy(); });
+                Object.values(charts).forEach(chart => chart.destroy());
                 charts = {};
                 setTimeout(() => createCharts(theme), 100);
             }
@@ -2556,8 +3170,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const particlesContainer = document.getElementById('particles');
             if (particlesContainer) {
-                const createParticle = () => {
-                     const particle = document.createElement('div');
+                setInterval(() => {
+                    const particle = document.createElement('div');
                     particle.className = 'particle';
                     particle.style.left = Math.random() * 100 + '%';
                     particle.style.animationDelay = Math.random() * 8 + 's';
@@ -2568,8 +3182,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             particle.remove();
                         }
                     }, 8000);
-                }
-                setInterval(createParticle, 300);
+                }, 300);
             }
 
             const observer = new IntersectionObserver((entries) => {
@@ -2692,11 +3305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 answersEl.innerHTML = '';
                 feedbackEl.innerHTML = '';
                 nextBtn.textContent = 'Retake Quiz';
-                nextBtn.onclick = () => {
-                    currentQuestionIndex = 0;
-                    correctAnswers = 0;
-                    showQuestion();
-                };
+                nextBtn.onclick = () => window.location.reload();
             }
 
             nextBtn.onclick = () => {
@@ -2714,6 +3323,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
         });
     </script>
 </body>
