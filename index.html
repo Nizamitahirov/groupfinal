@@ -894,6 +894,12 @@ html
         [data-theme="light"] .custom-table td:nth-child(2) {
              color: var(--text-primary); /* For the centered bold percentages */
         }
+        [data-theme="light"] .conclusion-quote-card p {
+            color: var(--text-primary);
+        }
+        [data-theme="light"] .conclusion-quote-card p.italic-text {
+             color: var(--text-secondary);
+        }
 
 
         .custom-table td:nth-child(2) {
@@ -1228,16 +1234,16 @@ html
                 }
             };
             
-            // Clear existing charts if any
-            let existingChart = Chart.getChart('emojiIncreaseChartComplete');
-            if (existingChart) existingChart.destroy();
-            existingChart = Chart.getChart('emojiReasonBuildChartComplete');
-            if (existingChart) existingChart.destroy();
-            existingChart = Chart.getChart('emojiReasonReadChartComplete');
-            if (existingChart) existingChart.destroy();
+            let chartInstances = [
+                Chart.getChart('emojiIncreaseChartComplete'),
+                Chart.getChart('emojiReasonBuildChartComplete'),
+                Chart.getChart('emojiReasonReadChartComplete')
+            ];
+            chartInstances.forEach(instance => {
+                if(instance) instance.destroy();
+            });
 
 
-            // --- Chart 1: Artan Emoji İstifadəsi (Doughnut Chart) ---
             const emojiIncreaseCtx = document.getElementById('emojiIncreaseChartComplete');
             if (emojiIncreaseCtx) {
                 new Chart(emojiIncreaseCtx.getContext('2d'), {
@@ -1247,7 +1253,6 @@ html
                 });
             }
 
-            // --- Chart 2: Əlaqə Qurmaq üçün (Bar Chart) ---
             const emojiReasonBuildCtx = document.getElementById('emojiReasonBuildChartComplete');
             if (emojiReasonBuildCtx) {
                 new Chart(emojiReasonBuildCtx.getContext('2d'), {
@@ -1263,7 +1268,6 @@ html
                 });
             }
 
-            // --- Chart 3: Cavab Alma Şansını Artırmaq üçün (Bar Chart) ---
             const emojiReasonReadCtx = document.getElementById('emojiReasonReadChartComplete');
             if (emojiReasonReadCtx) {
                 new Chart(emojiReasonReadCtx.getContext('2d'), {
@@ -1385,7 +1389,6 @@ html
     </div>
 </section>
 
-<!-- Bu CSS kodunu <style> teqinizin içinə əlavə edin -->
 <style>
     .reasons-grid {
         display: grid;
@@ -1423,7 +1426,7 @@ html
         color: var(--bg-primary);
         font-weight: 700;
         font-size: 0.9rem;
-        min-width: 40px; /* Ensure even small percentages are readable */
+        min-width: 40px;
     }
 
     .cell-gen {
@@ -1432,14 +1435,13 @@ html
         font-size: 1rem;
         padding: 0.5rem 0;
         border-left: 1px solid var(--glass-border);
+        color: var(--text-primary);
     }
     
     [data-theme="light"] .bar {
-        color: var(--text-primary); /* FIXED: Readable text color on light bar */
-        background-color: var(--accent-cyan);
+        color: var(--text-primary);
     }
 
-    /* Remove left border for the first generation cell */
     .reasons-grid > .cell-gen:nth-of-type(6n+3) {
         border-left: none;
     }
@@ -1457,10 +1459,10 @@ html
     
     @media (max-width: 768px) {
         .reasons-grid {
-            display: block; /* Switch to block layout on small screens */
+            display: block;
         }
         .reasons-header {
-            display: none; /* Hide headers on mobile */
+            display: none;
         }
         .reasons-grid > div {
             margin-bottom: 1rem;
@@ -1474,7 +1476,7 @@ html
             margin-top: 1.5rem;
         }
         .reasons-grid > .cell-gen {
-            display: none; /* Hide generation data on mobile to prevent clutter. The bar chart remains */
+            display: none;
         }
     }
 </style>
@@ -1535,9 +1537,6 @@ html
     </p>
 
     <div class="grid grid-2">
-        <!-- ======================================================= -->
-        <!--                  MÜSBƏT NÜMUNƏ KARTI                   -->
-        <!-- ======================================================= -->
         <div class="card example-card positive-example">
             <h3 class="card-title" style="color: var(--success);">✅ Positive Example: Marc Benioff, Salesforce CEO</h3>
             <div class="example-meta">
@@ -1562,9 +1561,6 @@ html
             </div>
         </div>
 
-        <!-- ======================================================= -->
-        <!--                   MƏNFİ NÜMUNƏ KARTI                   -->
-        <!-- ======================================================= -->
         <div class="card example-card negative-example">
             <h3 class="card-title" style="color: var(--danger);">❌ Negative Example: Goldman Sachs Layoff Slack Thread</h3>
              <div class="example-meta">
@@ -1590,7 +1586,6 @@ html
     </div>
 </section>
 
-<!-- Bu CSS kodunu <style> teqinizin içinə əlavə edin -->
 <style>
     .example-card {
         display: flex;
@@ -1620,7 +1615,7 @@ html
         font-family: 'Georgia', serif;
         font-style: italic;
         color: var(--text-secondary);
-        flex-grow: 1; /* Blokun hündürlüyünü bərabərləşdirməyə kömək edir */
+        flex-grow: 1;
     }
     
     [data-theme="light"] .message-block {
@@ -1648,27 +1643,26 @@ html
     }
     .reasons-list li {
         position: relative;
-        padding-left: 2em; /* Simvol üçün yer saxlayır */
+        padding-left: 2em;
         margin-bottom: 0.75rem;
     }
     .reasons-list li::before {
         position: absolute;
         left: 0;
         top: 0;
-        font-family: 'Inter', sans-serif; /* Simvolun düzgün görünməsi üçün */
+        font-family: 'Inter', sans-serif;
         font-style: normal;
         font-weight: 900;
         font-size: 1.2em;
         line-height: 1;
     }
 
-    /* Müsbət və mənfi listlər üçün xüsusi simvollar və rənglər */
     .positive-list li::before {
-        content: '⊞'; /* Squared Plus */
+        content: '⊞';
         color: var(--success);
     }
     .negative-list li::before {
-        content: '⊟'; /* Squared Minus */
+        content: '⊟';
         color: var(--danger);
     }
 
@@ -1682,9 +1676,6 @@ html
     </p>
 
     <div class="grid grid-3">
-        <!-- ======================================================= -->
-        <!--              GOLDMAN SACHS NÜMUNƏ KARTI                  -->
-        <!-- ======================================================= -->
         <div class="card risk-card">
             <h3 class="card-title" style="color: var(--danger);">Goldman Sachs – Slack Missteps During Layoffs</h3>
             <ul class="risk-list">
@@ -1694,9 +1685,6 @@ html
             </ul>
         </div>
 
-        <!-- ======================================================= -->
-        <!--             MITSUBISHI NÜMUNƏ KARTI                    -->
-        <!-- ======================================================= -->
         <div class="card risk-card">
              <h3 class="card-title" style="color: var(--warning);">Mitsubishi Corp – Generational and Cultural Misalignment</h3>
              <ul class="risk-list">
@@ -1706,9 +1694,6 @@ html
             </ul>
         </div>
 
-        <!-- ======================================================= -->
-        <!--                NETFLIX NÜMUNƏ KARTI                    -->
-        <!-- ======================================================= -->
         <div class="card risk-card">
             <h3 class="card-title" style="color: var(--accent-orange);">Netflix – Conflicting Emoji Meanings Across Cultures</h3>
              <ul class="risk-list">
@@ -1719,14 +1704,13 @@ html
     </div>
 </section>
 
-<!-- Bu CSS kodunu <style> teqinizin içinə əlavə edin -->
 <style>
     .risk-card {
         border-left: 4px solid;
     }
     .risk-card:nth-child(1) { border-color: var(--danger); }
     .risk-card:nth-child(2) { border-color: var(--warning); }
-    .risk-card:nth-child(3) { border-color: var(--accent-orange, #f59e0b); } /* accent-orange yoxdursa, default narıncı */
+    .risk-card:nth-child(3) { border-color: var(--accent-orange, #f59e0b); }
 
     .risk-list {
         list-style: none;
@@ -1741,7 +1725,7 @@ html
         line-height: 1.6;
     }
     .risk-list li::before {
-        content: '⊟'; /* Squared Minus */
+        content: '⊟';
         position: absolute;
         left: 0;
         top: 2px;
@@ -1766,9 +1750,6 @@ html
     
     <div class="insight-grid">
         
-        <!-- ======================================================= -->
-        <!--                      SOL SÜTUN                         -->
-        <!-- ======================================================= -->
         <div class="insight-card">
             <h3 class="insight-title"><span class="insight-icon">📊</span>Generational Divide: Who Likes Emoji Leadership?</h3>
             
@@ -1785,7 +1766,6 @@ html
                 <p>Informal communication increases perceived leadership accessibility among younger employees, but older workers may see it as a loss of authority.</p>
             </div>
             
-            <!-- Qrafik bu kartın içində yerləşdirilib -->
             <div class="chart-block">
                 <h4 style="text-align: center; color: var(--text-secondary); font-weight: 500;">Agreement with "More Human" Communication</h4>
                 <div style="position: relative; height: 250px; margin-top: 1rem;">
@@ -1798,9 +1778,6 @@ html
             </div>
         </div>
 
-        <!-- ======================================================= -->
-        <!--                       SAĞ SÜTUN                        -->
-        <!-- ======================================================= -->
         <div style="display: flex; flex-direction: column; gap: 2rem;">
             <div class="insight-card">
                 <h3 class="insight-title"><span class="insight-icon">💬</span>The Rise of "Digital Body Language"</h3>
@@ -1818,7 +1795,6 @@ html
     </div>
 </section>
 
-<!-- Bu CSS kodunu <style> teqinizin içinə əlavə edin -->
 <style>
     .insight-grid {
         display: grid;
@@ -1833,7 +1809,6 @@ html
         padding: 2.5rem;
         height: 100%;
         transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-        /* Giriş animasiyası üçün */
         opacity: 0;
         transform: translateY(20px);
         animation: fadeInUp 0.6s ease-out forwards;
@@ -1969,9 +1944,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <section id="leadership-command-center" class="section">
     <h2 class="section-title"><span class="emoji">🚀</span>Leadership Command Center</h2>
 
-    <!-- 3D ÇEVRİLƏN KARTLAR -->
     <div class="flip-card-grid">
-        <!-- Kart 1 -->
         <div class="flip-card" style="--i: 0;">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -1985,7 +1958,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         </div>
-        <!-- Kart 2 -->
         <div class="flip-card" style="--i: 1;">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -1999,7 +1971,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         </div>
-        <!-- Kart 3 -->
         <div class="flip-card" style="--i: 2;">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -2013,7 +1984,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         </div>
-        <!-- Kart 4 -->
         <div class="flip-card" style="--i: 3;">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -2029,9 +1999,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 
-    <!-- ======================================================= -->
-    <!--          XÜSUSİ DİZAYNLI İNFOQRAFİKA KARTI              -->
-    <!-- ======================================================= -->
     <div class="infographic-cc-container">
         <div class="infographic-cc-card">
             <div class="cc-bg-grid"></div>
@@ -2043,7 +2010,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
 
             <div class="cc-body">
-                <!-- Sütun 1: Faydalar -->
                 <div class="cc-column">
                     <h3 class="cc-title" style="--glow-color: var(--success);">✅ KEY BENEFITS</h3>
                     <ul>
@@ -2053,7 +2019,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </ul>
                 </div>
 
-                <!-- Sütun 2: Nümunələr -->
                 <div class="cc-column">
                     <h3 class="cc-title" style="--glow-color: var(--accent-cyan);">🏢 REAL-WORLD EXAMPLES</h3>
                     <ul>
@@ -2063,7 +2028,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </ul>
                 </div>
 
-                <!-- Sütun 3: Risklər -->
                 <div class="cc-column">
                     <h3 class="cc-title" style="--glow-color: var(--danger);">⚠️ RISKS</h3>
                     <ul>
@@ -2077,9 +2041,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 </section>
 
-<!-- Bu CSS kodunu <style> teqinizin içinə əlavə edin -->
 <style>
-    /* Flip Kartlar üçün Stillər */
     .flip-card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -2152,7 +2114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         opacity: 0.7;
     }
 
-    /* Command Center İnfoqrafika Stilləri */
     .infographic-cc-container {
         padding: 2rem 0;
     }
@@ -2212,8 +2173,8 @@ document.addEventListener('DOMContentLoaded', () => {
         text-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-cyan);
     }
     [data-theme="light"] .cc-header h2 {
-        color: var(--text-primary); /* FIXED */
-        text-shadow: none; /* FIXED */
+        color: var(--text-primary);
+        text-shadow: none;
     }
 
     .cc-header p {
@@ -2251,7 +2212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         text-shadow: 0 0 8px var(--glow-color);
     }
      [data-theme="light"] .cc-title {
-        text-shadow: none; /* FIXED */
+        text-shadow: none;
     }
     .cc-column ul {
         list-style: none;
@@ -2470,15 +2431,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     context sensitivity to avoid misfires.</p>
             </div>
         </div>
-        <div class="card"
+        <div class="card conclusion-quote-card"
             style="margin-top: 3rem; text-align: center; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));">
             <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">The Real Leadership
                 Question</h3>
-            <p style="font-size: 1.2rem; line-height: 1.7; margin-bottom: 2rem; color: var(--text-primary);">
+            <p>
                 Not: "Should I use emojis as a leader?"<br>
                 But: <strong>"Has my leadership earned the emotional trust to use them meaningfully?"</strong>
             </p>
-            <p style="font-style: italic; color: var(--text-secondary);">
+            <p class="italic-text">
                 Emojis don't lead — leaders do. They don't replace sincerity — they reflect it. Used well, they build
                 bridges. Used poorly, they expose emotional gaps.
             </p>
@@ -2535,13 +2496,12 @@ document.addEventListener('DOMContentLoaded', () => {
             function createCharts(theme = 'dark') {
                 const colors = getChartColors(theme);
 
-                // Leadership Effectiveness Chart
                 const leadershipCtx = document.getElementById('leadershipChart')?.getContext('2d');
                 if (leadershipCtx) {
                     charts.leadership = new Chart(leadershipCtx, {
                         type: 'radar',
                         data: {
-                            labels: ['Authenticity', 'Team Connection', 'Communication Clarity', 'Cultural Sensitivity', 'Generational Appeal'],
+                            labels: ['Authenticity', 'Team Connection', 'Clarity', 'Cultural Sensitivity', 'Generational Appeal'],
                             datasets: [
                                 {
                                     label: 'Transformational Leadership',
@@ -2564,9 +2524,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                 r: {
                                     beginAtZero: true,
                                     max: 100,
-                                    ticks: { color: colors.text, backdropColor: 'transparent' }, // FIXED: backdrop for light mode
+                                    ticks: { color: colors.text, backdropColor: 'transparent' },
                                     grid: { color: colors.grid },
-                                    pointLabels: { color: colors.text, font: {size: 12} }
+                                    pointLabels: { color: colors.text, font: {size: 11} }
                                 }
                             },
                             plugins: {
@@ -2580,7 +2540,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             function updateChartsTheme(theme) {
-                Object.values(charts).forEach(chart => chart.destroy());
+                Object.values(charts).forEach(chart => { if(chart) chart.destroy(); });
                 charts = {};
                 setTimeout(() => createCharts(theme), 100);
             }
